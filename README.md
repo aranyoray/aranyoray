@@ -1,6 +1,7 @@
 # 👨‍💻 About Me
 Hi all! I'm a current third-year undergrad majoring in CS and Psychology, and Pure Mathematics. I love exploring different areas of machine learning, number theory, and combinatorics.
 - Email: aranyo.ray@yale.edu
+- 
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?style=flat-square&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/aranyo/)
 
 ## 🛠 Tech Stack:
