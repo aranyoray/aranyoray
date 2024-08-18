@@ -1,5 +1,5 @@
 # 👨‍💻 About Me
-Hi all! I'm Aranyo, an aspiring mathematician who loves exploring different areas of machine learning, number theory, and combinatorics. Feel free to email aranyoray@gmail.com if you are interested in these topics! I also occassionally write at [my blog](https://what-aranyo-said.webflow.io/).
+Hi all! I'm Aranyo, a full stack developer who loves exploring different areas of machine learning, number theory, and combinatorics. Feel free to email aranyoray@gmail.com if you are interested in these topics! I also occassionally write at [my blog](https://what-aranyo-said.webflow.io/).
 
 ### Connect:
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?style=flat-square&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/aranyo/)
