@@ -1,8 +1,8 @@
 # 👨‍💻 About Me
 Hi all! I'm Aranyo, an aspiring mathematician who loves exploring different areas of machine learning, number theory, and combinatorics.
-- Email: aranyoray@gmail.com
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?style=flat-square&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/aranyo/)
-[Blog](https://what-aranyo-said.webflow.io/)
+- Email: aranyoray@gmail.com           
+[![LinkedIn           ](https://img.shields.io/badge/LinkedIn-%230077B5.svg?style=flat-square&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/aranyo/)
+[Blog           ](https://what-aranyo-said.webflow.io/)
 
 ## 🛠 Tech Stack:
 ![Java](https://img.shields.io/badge/Java-%23ED8B00.svg?style=flat-square&logo=java&logoColor=white)
