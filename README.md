@@ -35,3 +35,14 @@ Hi all! I'm Aranyo, a full stack developer who loves exploring different areas o
 ![ElasticSearch](https://img.shields.io/badge/ElasticSearch-%23005571.svg?style=flat-square&logo=elasticsearch&logoColor=white)
 ![Kibana](https://img.shields.io/badge/Kibana-%23005571.svg?style=flat-square&logo=kibana&logoColor=white)
 ![SonarQube](https://img.shields.io/badge/SonarQube-%234E9BCD.svg?style=flat-square&logo=sonarqube&logoColor=white)
+
+
+## 👨‍💻 About Me
+{
+  "aboutMe": "Hi all! I'm Aranyo, a full stack developer who loves exploring different areas of machine learning, number theory, and combinatorics. Feel free to email aranyoray@gmail.com if you are interested in these topics! I also occasionally write at my blog.",
+  "links": {
+    "LinkedIn": "[![LinkedIn](https://img.shields.io/badge/LinkedIn-%230A66C2.svg?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/aranyo/)",
+    "X": "[![X](https://img.shields.io/badge/X-%23000000.svg?style=for-the-badge&logo=x&logoColor=white)](https://x.com)",
+    "Dribbble": "[![Dribbble](https://img.shields.io/badge/Dribbble-%23E94C89.svg?style=for-the-badge&logo=dribbble&logoColor=white)](https://dribbble.com)"
+  }
+}
