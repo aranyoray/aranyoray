@@ -41,7 +41,7 @@ Hi all! I'm Aranyo, a full stack developer who loves exploring different areas o
 {
   "aboutMe": "Hi all! I'm Aranyo, a full stack developer who loves exploring different areas of machine learning, number theory, and combinatorics. Feel free to email aranyoray@gmail.com if you are interested in these topics! I also occasionally write at my blog.",
   "links": {
-    "LinkedIn": "[![LinkedIn](https://img.shields.io/badge/LinkedIn-%230A66C2.svg?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/aranyo/)",
+  "[![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?style=flat-square&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/aranyo/)",
     "X": "[![X](https://img.shields.io/badge/X-%23000000.svg?style=for-the-badge&logo=x&logoColor=white)](https://x.com)",
     "Dribbble": "[![Dribbble](https://img.shields.io/badge/Dribbble-%23E94C89.svg?style=for-the-badge&logo=dribbble&logoColor=white)](https://dribbble.com)"
   }
