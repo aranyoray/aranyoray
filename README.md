@@ -35,12 +35,3 @@ Hi all! I'm Aranyo, a full stack developer who loves exploring different areas o
 ![ElasticSearch](https://img.shields.io/badge/ElasticSearch-%23005571.svg?style=flat-square&logo=elasticsearch&logoColor=white)
 ![Kibana](https://img.shields.io/badge/Kibana-%23005571.svg?style=flat-square&logo=kibana&logoColor=white)
 ![SonarQube](https://img.shields.io/badge/SonarQube-%234E9BCD.svg?style=flat-square&logo=sonarqube&logoColor=white)
-
-  "misc": {
-    ![Mathematica](https://img.shields.io/badge/Mathematica-%23DD1100.svg?style=flat-square&logo=wolfram&logoColor=white)
-    ![Julia](https://img.shields.io/badge/Julia-%231A1A1A.svg?style=flat-square&logo=julia&logoColor=white)
-    ![ElasticSearch](https://img.shields.io/badge/ElasticSearch-%23005571.svg?style=flat-square&logo=elasticsearch&logoColor=white)
-    ![Kibana](https://img.shields.io/badge/Kibana-%23005571.svg?style=flat-square&logo=kibana&logoColor=white)
-    ![SonarQube](https://img.shields.io/badge/SonarQube-%234E9BCD.svg?style=flat-square&logo=sonarqube&logoColor=white)
- }
-}
