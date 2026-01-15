@@ -1,5 +1,40 @@
 // Enhanced Portfolio Interactions
 document.addEventListener('DOMContentLoaded', () => {
+    // Dark Mode Toggle
+    const themeToggle = document.querySelector('.theme-toggle');
+    const html = document.documentElement;
+
+    // Check for saved theme preference or use system preference
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) {
+        html.setAttribute('data-theme', savedTheme);
+    }
+
+    // Get current theme (considering system preference)
+    const getCurrentTheme = () => {
+        const savedTheme = html.getAttribute('data-theme');
+        if (savedTheme) return savedTheme;
+        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+
+    // Toggle theme
+    if (themeToggle) {
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = getCurrentTheme();
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            html.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+        });
+    }
+
+    // Listen for system theme changes
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+        if (!localStorage.getItem('theme')) {
+            // Only update if user hasn't manually set a preference
+            html.removeAttribute('data-theme');
+        }
+    });
+
     // Intersection Observer for scroll animations
     const observerOptions = {
         root: null,
@@ -56,15 +91,19 @@ document.addEventListener('DOMContentLoaded', () => {
     
     window.addEventListener('scroll', () => {
         const currentScroll = window.pageYOffset;
-        
+        const styles = getComputedStyle(document.documentElement);
+        const shadowColor = styles.getPropertyValue('--color-shadow').trim();
+        const headerBg = styles.getPropertyValue('--color-header-bg').trim();
+        const headerBgScroll = styles.getPropertyValue('--color-header-bg-scroll').trim();
+
         if (currentScroll > 100) {
-            header.style.boxShadow = '0 2px 30px rgba(0, 0, 0, 0.08)';
-            header.style.background = 'rgba(253, 252, 250, 0.98)';
+            header.style.boxShadow = `0 2px 30px ${shadowColor}`;
+            header.style.background = headerBgScroll;
         } else {
             header.style.boxShadow = 'none';
-            header.style.background = 'rgba(253, 252, 250, 0.95)';
+            header.style.background = headerBg;
         }
-        
+
         lastScroll = currentScroll;
     });
 
@@ -85,26 +124,41 @@ document.addEventListener('DOMContentLoaded', () => {
     const cursor = document.createElement('div');
     cursor.className = 'custom-cursor';
     cursor.innerHTML = '<span>View</span>';
-    cursor.style.cssText = `
-        position: fixed;
-        width: 90px;
-        height: 90px;
-        border-radius: 50%;
-        background: linear-gradient(135deg, rgba(45, 90, 39, 0.95), rgba(45, 90, 39, 0.85));
-        color: white;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 0.9rem;
-        font-weight: 600;
-        pointer-events: none;
-        opacity: 0;
-        transform: scale(0);
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        z-index: 1000;
-        box-shadow: 0 4px 20px rgba(45, 90, 39, 0.4);
-    `;
+    const updateCursorColors = () => {
+        const styles = getComputedStyle(document.documentElement);
+        const accent = styles.getPropertyValue('--color-accent').trim();
+        cursor.style.cssText = `
+            position: fixed;
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, ${accent}, ${accent}dd);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            font-weight: 600;
+            pointer-events: none;
+            opacity: 0;
+            transform: scale(0);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 1000;
+            box-shadow: 0 4px 20px ${accent}66;
+        `;
+    };
+    updateCursorColors();
     document.body.appendChild(cursor);
+
+    // Update cursor colors when theme changes
+    const observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+            if (mutation.attributeName === 'data-theme') {
+                updateCursorColors();
+            }
+        });
+    });
+    observer.observe(document.documentElement, { attributes: true });
 
     projectCards.forEach(card => {
         card.addEventListener('mouseenter', () => {
@@ -182,11 +236,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const highlights = document.querySelectorAll('.highlight');
     highlights.forEach(highlight => {
         highlight.addEventListener('mouseenter', () => {
-            highlight.style.background = 'linear-gradient(180deg, transparent 50%, #d4e5d1 50%)';
+            const styles = getComputedStyle(document.documentElement);
+            const accentLight = styles.getPropertyValue('--color-accent-light').trim();
+            highlight.style.background = `linear-gradient(180deg, transparent 50%, ${accentLight} 50%)`;
         });
-        
+
         highlight.addEventListener('mouseleave', () => {
-            highlight.style.background = 'linear-gradient(180deg, transparent 60%, #d4e5d1 60%)';
+            const styles = getComputedStyle(document.documentElement);
+            const accentLight = styles.getPropertyValue('--color-accent-light').trim();
+            highlight.style.background = `linear-gradient(180deg, transparent 60%, ${accentLight} 60%)`;
         });
     });
 
