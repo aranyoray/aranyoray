@@ -11,16 +11,16 @@
 </head>
 <body>
     <div class="container">
-        <!-- Header / Navigation -->
+        <!-- Header -->
         <header class="header">
             <nav class="nav">
                 <a href="#" class="nav-logo">
                     <img src="arlogo.svg" alt="AR" class="logo-img">
                 </a>
                 <div class="nav-links">
-                    <a href="#about">About</a>
-                    <a href="#now">Now</a>
-                    <a href="#projects">Projects</a>
+                    <a href="#arc">Work</a>
+                    <a href="#philosophy">Approach</a>
+                    <a href="#contact">Contact</a>
                     <button class="theme-toggle" aria-label="Toggle dark mode">
                         <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
@@ -42,168 +42,191 @@
         </header>
 
         <main>
-            <!-- Hero / Intro Section -->
-            <section id="about" class="section hero">
-                <h1 class="hero-title">Aranyo Ray</h1>
-                <p class="hero-subtitle">Builder & Researcher</p>
-                <div class="hero-bio">
-                    <p>I design <span class="highlight">AI systems</span> that feel <em>human</em> and create <em>impact</em>. I study computer science and psychology to understand minds—both human and artificial.</p>
-                    <p>Currently focused on AI avatars for child therapy, developing systems that reach thousands of users across healthcare and agriculture.</p>
-                </div>
-                <div class="credentials">
-                    <span class="credential">Yale '24</span>
-                    <span class="credential">Intel ISEF '21 '19</span>
-                    <span class="credential">Wu Tsai Scholar '23</span>
-                    <span class="credential">Ashoka Young Changemaker</span>
-                    <span class="credential">Diana Award '21</span>
+            <!-- Hero -->
+            <section class="hero">
+                <h1 class="hero-title">I turn ambiguity into outcomes.</h1>
+                <p class="hero-sub">Builder across science, AI, psychology, and infrastructure — with proof at scale.</p>
+            </section>
+
+            <!-- The Arc -->
+            <section id="arc" class="arc">
+                <h2 class="section-label">The Arc</h2>
+
+                <!-- 2018 -->
+                <article class="year-block">
+                    <div class="year-marker">2018</div>
+                    <div class="year-content">
+                        <h3 class="year-headline">Early Signal</h3>
+                        <p class="year-context">Science with real-world impact.</p>
+                        <ul class="outcomes">
+                            <li>Commended by the US Air Force at ISEF for nanopesticide research <span class="proof">(Top ~20 of 12,000+ submissions)</span></li>
+                            <li>Awarded National Talent Search Scholarship <span class="proof">("Junior IAS", top 0.5%)</span></li>
+                            <li>Prudential National Honoree for work with 1,200+ farmers</li>
+                            <li>Focus: scalable, low-cost agri-tech using nanoscience</li>
+                        </ul>
+                    </div>
+                </article>
+
+                <!-- 2019 -->
+                <article class="year-block">
+                    <div class="year-marker">2019</div>
+                    <div class="year-content">
+                        <h3 class="year-headline">Institutional Validation</h3>
+                        <p class="year-context">Turning experiments into systems.</p>
+                        <ul class="outcomes">
+                            <li>Recognized by The Diana Award and Ashoka</li>
+                            <li>Institutionalized NanoCide production using rice husk ash (agricultural waste)</li>
+                            <li>Demonstrated science-as-a-service model for farmers</li>
+                        </ul>
+                    </div>
+                </article>
+
+                <!-- 2020 -->
+                <article class="year-block">
+                    <div class="year-marker">2020</div>
+                    <div class="year-content">
+                        <h3 class="year-headline">Selective Depth</h3>
+                        <p class="year-context">Chosen for rigor.</p>
+                        <ul class="outcomes">
+                            <li>Selected 1 of 25 globally for MIT / Caltech–sponsored Summer Science Program <span class="proof">(Biochemistry)</span></li>
+                            <li>Conducted in-silico + in-vivo drug discovery</li>
+                            <li>Presented novel fungal enzyme inhibitor research to Purdue faculty</li>
+                        </ul>
+                    </div>
+                </article>
+
+                <!-- 2021 -->
+                <article class="year-block">
+                    <div class="year-marker">2021</div>
+                    <div class="year-content">
+                        <h3 class="year-headline">Translation to Human Impact</h3>
+                        <p class="year-context">From lab to lives.</p>
+                        <ul class="outcomes">
+                            <li>Co-developed Autest, a culturally relevant autism risk-assessment app</li>
+                            <li>Piloted with 82 children</li>
+                            <li>1st Place, American Psychological Association <span class="proof">(ISEF)</span></li>
+                            <li>Commended by American Statistical Association</li>
+                            <li>Published in Harvard GSAS – Journal of Emerging Investigators</li>
+                            <li>Still used across 5 special schools and 3 NGOs</li>
+                        </ul>
+                    </div>
+                </article>
+
+                <!-- 2021 Industry -->
+                <article class="year-block">
+                    <div class="year-marker">2021</div>
+                    <div class="year-content">
+                        <h3 class="year-headline">First Industry Exposure</h3>
+                        <p class="year-context">Shipping beats theorizing.</p>
+                        <ul class="outcomes">
+                            <li>Growth Intern @ Reservoir</li>
+                            <li>Secured $20K grant <span class="proof">(IISc Bangalore + Maharashtra State Govt)</span></li>
+                            <li>Built digital puppeteering SEL platform for neurodiverse children</li>
+                            <li>Platform acqui-hired by BYJU'S</li>
+                        </ul>
+                    </div>
+                </article>
+
+                <!-- 2021-2022 -->
+                <article class="year-block">
+                    <div class="year-marker">2021–22</div>
+                    <div class="year-content">
+                        <h3 class="year-headline">Behavioral Science at Scale</h3>
+                        <p class="year-context">Measuring humans, not hypotheticals.</p>
+                        <ul class="outcomes">
+                            <li>Research at CAMS Lab, Yale School of Medicine</li>
+                            <li>Studied stress & episodic memory in alcohol use disorder</li>
+                            <li>Designed & ran Ecological Momentary Assessments <span class="proof">(33 participants)</span></li>
+                            <li>Awarded Yale College Dean's Office + Summer Research Fellowship funding</li>
+                            <li>Inducted into Yale Undergraduate Consulting Group</li>
+                            <li>Clients: Google, Bank of America, consumer tech, productivity platforms</li>
+                            <li>Promoted to Project Manager in 3 semesters</li>
+                        </ul>
+                    </div>
+                </article>
+
+                <!-- 2023-2024 -->
+                <article class="year-block">
+                    <div class="year-marker">2023–24</div>
+                    <div class="year-content">
+                        <h3 class="year-headline">Cognition, Bias & Decision-Making</h3>
+                        <p class="year-context">Quantifying the invisible.</p>
+                        <ul class="outcomes">
+                            <li>Research Fellow <span class="proof">(1 of 12)</span>, Wu Tsai Institute, Yale</li>
+                            <li>Studied formation & persistence of attitudes and social memory</li>
+                            <li>Built novel eye-tracking + cursor-tracking methods to quantify bias & confidence</li>
+                            <li>Manuscript accepted in principle</li>
+                            <li>Associate Consultant Intern @ Bain & Company</li>
+                            <li>Healthcare merger & strategy work</li>
+                        </ul>
+                    </div>
+                </article>
+
+                <!-- 2023-2025 -->
+                <article class="year-block">
+                    <div class="year-marker">2023–25</div>
+                    <div class="year-content">
+                        <h3 class="year-headline">Applied Systems & National Scale</h3>
+                        <p class="year-context">Research → deployment → policy relevance.</p>
+                        <ul class="outcomes">
+                            <li>Joined Graymatics while seeking SBIR partner</li>
+                            <li>Awarded US SBIR Phase I Grant <span class="proof">(Aug 2024)</span></li>
+                            <li>Toyota Mobility Hackathon India — Semi-Finalist; led solution ideation & pitch</li>
+                            <li>Defense Innovation Unit – NSIN Foundry — Semi-Finalist</li>
+                            <li>Accenture Innovation Challenge 2024 — Winner <span class="proof">(Manufacturing safety using VR + digital twins)</span></li>
+                            <li>MoveInSync Mobility Hackathon 2024 — National Winner</li>
+                            <li>Led 3-person team; won pilot with Bangalore Metro <span class="proof">(~700k daily riders)</span></li>
+                            <li>Won $50K+ in non-dilutive grants (2024–25)</li>
+                        </ul>
+                    </div>
+                </article>
+            </section>
+
+            <!-- Philosophy -->
+            <section id="philosophy" class="philosophy">
+                <h2 class="section-label">How I Work</h2>
+                <ul class="philosophy-list">
+                    <li>Start with constraints, not ideas</li>
+                    <li>Ship early, iterate in public</li>
+                    <li>Optimize for adoption, not elegance</li>
+                    <li>Evidence over ego</li>
+                </ul>
+            </section>
+
+            <!-- Proof -->
+            <section class="proof-section">
+                <h2 class="section-label">Proof Over Claims</h2>
+                <div class="logos-grid">
+                    <span class="logo-item">USAF</span>
+                    <span class="logo-item">Diana Award</span>
+                    <span class="logo-item">Ashoka</span>
+                    <span class="logo-item">MIT</span>
+                    <span class="logo-item">Caltech</span>
+                    <span class="logo-item">Yale</span>
+                    <span class="logo-item">APA</span>
+                    <span class="logo-item">Bain</span>
+                    <span class="logo-item">Accenture</span>
+                    <span class="logo-item">Toyota</span>
+                    <span class="logo-item">Govt of India</span>
                 </div>
             </section>
 
-            <!-- Now Section -->
-            <section id="now" class="section">
-                <h2 class="section-title">Now</h2>
-                <div class="now-content">
-                    <p>Working at <strong>Graymatics</strong> on AI & Computer Vision. Building:</p>
-                    <ul class="now-list">
-                        <li><strong>NetraPlay</strong> — AI-driven vision screening platform</li>
-                        <li><strong>Komal Kids</strong> — Child safety browser with intelligent content filtering</li>
-                        <li>Research in computational astrophysics and medical technology</li>
-                    </ul>
-                    <p class="now-location">Based in Kolkata, India</p>
-                </div>
-            </section>
-
-            <!-- Projects Section -->
-            <section id="projects" class="section">
-                <h2 class="section-title">Selected Work</h2>
-
-                <div class="projects-list">
-                    <article class="project-item">
-                        <div class="project-image" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
-                            <span class="project-icon">🤖</span>
-                        </div>
-                        <div class="project-info">
-                            <h3>Avatar-powered Transfer Learning</h3>
-                            <p>AI avatars enabling personalized child therapy through adaptive learning systems. Combines computer vision with psychological frameworks to create responsive therapeutic companions.</p>
-                            <span class="project-tag">AI/ML • Healthcare</span>
-                        </div>
-                    </article>
-
-                    <article class="project-item">
-                        <div class="project-image" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
-                            <span class="project-icon">🎮</span>
-                        </div>
-                        <div class="project-info">
-                            <h3>Culturally Adapted Game for Autism</h3>
-                            <p>Therapeutic gaming application designed with cultural sensitivity for autism support. Features adaptive difficulty and culturally relevant scenarios for Indian children.</p>
-                            <span class="project-tag">Games • Accessibility</span>
-                        </div>
-                    </article>
-
-                    <article class="project-item">
-                        <div class="project-image" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
-                            <span class="project-icon">📹</span>
-                        </div>
-                        <div class="project-info">
-                            <h3>CCTV Analytics for Varanasi</h3>
-                            <p>Smart city surveillance analytics enhancing urban safety and crowd management. Real-time analysis for one of India's most densely visited religious cities.</p>
-                            <span class="project-tag">Computer Vision • Smart Cities</span>
-                        </div>
-                    </article>
-
-                    <article class="project-item">
-                        <div class="project-image" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
-                            <span class="project-icon">🌾</span>
-                        </div>
-                        <div class="project-info">
-                            <h3>Nanopesticide for ~1000 Farmers</h3>
-                            <p>Agricultural technology reaching thousands of farmers with sustainable pest control. Developed a nano-encapsulated pesticide delivery system reducing environmental impact.</p>
-                            <span class="project-tag">AgTech • Research</span>
-                        </div>
-                    </article>
-
-                    <article class="project-item">
-                        <div class="project-image" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
-                            <span class="project-icon">🧬</span>
-                        </div>
-                        <div class="project-info">
-                            <h3>Fungal Inhibitor Research</h3>
-                            <p>Biotechnology research developing novel solutions for agricultural challenges. Identified and tested natural compounds for sustainable crop protection.</p>
-                            <span class="project-tag">Biotech • Research</span>
-                        </div>
-                    </article>
-
-                    <article class="project-item">
-                        <div class="project-image" style="background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);">
-                            <span class="project-icon">📊</span>
-                        </div>
-                        <div class="project-info">
-                            <h3>Automated BANT Qualification</h3>
-                            <p>Revamped sales qualification system with intelligent automation at Graymatics. Streamlined lead scoring using ML to identify high-potential prospects.</p>
-                            <span class="project-tag">Sales Tech • Automation</span>
-                        </div>
-                    </article>
-                </div>
-            </section>
-
-            <!-- Experience Section -->
-            <section class="section">
-                <h2 class="section-title">Experience</h2>
-                <div class="timeline">
-                    <div class="timeline-item">
-                        <div class="timeline-content">
-                            <span class="timeline-role">AI & Computer Vision Engineer</span>
-                            <span class="timeline-company">Graymatics</span>
-                        </div>
-                        <span class="timeline-year">2024</span>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-content">
-                            <span class="timeline-role">Intel ISEF Finalist</span>
-                            <span class="timeline-company">Intel International Science Fair</span>
-                        </div>
-                        <span class="timeline-year">2021, 2019</span>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-content">
-                            <span class="timeline-role">Wu Tsai Scholar</span>
-                            <span class="timeline-company">Yale University</span>
-                        </div>
-                        <span class="timeline-year">2023</span>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-content">
-                            <span class="timeline-role">Computer Science & Psychology</span>
-                            <span class="timeline-company">Yale University</span>
-                        </div>
-                        <span class="timeline-year">2024</span>
-                    </div>
-                </div>
-            </section>
-
-            <!-- About Section -->
-            <section class="section about-extended">
-                <h2 class="section-title">About</h2>
-                <div class="about-content">
-                    <p>I believe the most meaningful innovations come from understanding people first. My work spans computer science, psychology, and real-world impact—from therapeutic AI systems to agricultural solutions.</p>
-                    <p>My earliest memory of creating is wondering how invisible code could carry such visible change. Since then, I've set out to learn each layer—from neural networks to human networks.</p>
-                    <p>When I'm not coding, you'll find me practicing Kathak, competing in Speech & Debate, or leading my team on the soccer field.</p>
+            <!-- Close -->
+            <section id="contact" class="close">
+                <p class="close-text">If you're working on something complex, early, or messy — I'm interested.</p>
+                <div class="close-links">
+                    <a href="mailto:aranyoray@gmail.com">aranyoray@gmail.com</a>
+                    <span class="divider">·</span>
+                    <a href="https://linkedin.com/in/aranyo" target="_blank">LinkedIn</a>
+                    <span class="divider">·</span>
+                    <a href="https://x.com/AranyoRay" target="_blank">Twitter</a>
                 </div>
             </section>
         </main>
 
         <!-- Footer -->
         <footer class="footer">
-            <div class="footer-statement">Build with <em>intention</em></div>
-            <div class="footer-links">
-                <a href="https://x.com/AranyoRay" target="_blank">Twitter</a>
-                <a href="https://linkedin.com/in/aranyo" target="_blank">LinkedIn</a>
-                <a href="https://instagram.com/aranyoray" target="_blank">Instagram</a>
-                <a href="mailto:aranyoray@gmail.com">Email</a>
-            </div>
-            <div class="footer-copy">
-                <span>Aranyo Ray</span>
-            </div>
+            <span>Aranyo Ray</span>
         </footer>
     </div>
 
