@@ -60,8 +60,8 @@ html {
 
 body {
     font-family: var(--font-sans);
-    font-size: 17px;
-    line-height: 1.6;
+    font-size: 19px;
+    line-height: 1.75;
     color: var(--color-text);
     background: var(--color-bg);
     -webkit-font-smoothing: antialiased;
@@ -107,7 +107,7 @@ body {
 .nav-links a {
     color: var(--color-text-secondary);
     text-decoration: none;
-    font-size: 0.9rem;
+    font-size: 1rem;
     transition: color 0.2s;
 }
 
@@ -158,9 +158,9 @@ body {
 }
 
 .definition-text {
-    font-size: 0.95rem;
+    font-size: 1rem;
     color: var(--color-text-secondary);
-    line-height: 1.6;
+    line-height: 1.7;
 }
 
 .definition-word {
@@ -190,15 +190,15 @@ body {
 }
 
 .hero-sub {
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     color: var(--color-text-secondary);
-    max-width: 540px;
+    max-width: 560px;
 }
 
 /* ===== Section Label ===== */
 .section-label {
     font-family: var(--font-sans);
-    font-size: 0.75rem;
+    font-size: 0.85rem;
     font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 0.1em;
@@ -226,7 +226,7 @@ body {
 
 .year-marker {
     font-family: var(--font-sans);
-    font-size: 0.85rem;
+    font-size: 0.95rem;
     font-weight: 500;
     color: var(--color-text-tertiary);
     padding-top: 0.15rem;
@@ -246,7 +246,7 @@ body {
 
 .year-context {
     color: var(--color-text-secondary);
-    font-size: 0.95rem;
+    font-size: 1rem;
     margin-bottom: var(--space-sm);
 }
 
@@ -259,10 +259,10 @@ body {
 .outcomes li {
     position: relative;
     padding-left: 1.25rem;
-    margin-bottom: 0.6rem;
-    font-size: 0.95rem;
+    margin-bottom: 0.7rem;
+    font-size: 1rem;
     color: var(--color-text-secondary);
-    line-height: 1.5;
+    line-height: 1.65;
 }
 
 .outcomes li::before {
@@ -348,7 +348,7 @@ body {
 
 .philosophy-list li {
     font-family: var(--font-serif);
-    font-size: 1.35rem;
+    font-size: 1.45rem;
     font-weight: 400;
     color: var(--color-text);
 }
@@ -366,7 +366,7 @@ body {
 }
 
 .logo-item {
-    font-size: 0.85rem;
+    font-size: 0.95rem;
     font-weight: 500;
     color: var(--color-text-tertiary);
     letter-spacing: 0.02em;
@@ -380,8 +380,8 @@ body {
 
 .closing-statement p {
     font-family: var(--font-serif);
-    font-size: 1.25rem;
-    line-height: 1.6;
+    font-size: 1.35rem;
+    line-height: 1.7;
     color: var(--color-text-secondary);
 }
 
@@ -414,7 +414,7 @@ body {
 .close-links a {
     color: var(--color-text);
     text-decoration: none;
-    font-size: 0.95rem;
+    font-size: 1.05rem;
     transition: color 0.2s;
 }
 
@@ -434,7 +434,7 @@ body {
 }
 
 .footer span {
-    font-size: 0.85rem;
+    font-size: 0.95rem;
     color: var(--color-text-tertiary);
 }
 
@@ -521,8 +521,8 @@ body {
 
 .modal-description {
     color: var(--color-text-secondary);
-    font-size: 0.95rem;
-    line-height: 1.6;
+    font-size: 1.05rem;
+    line-height: 1.7;
     margin-bottom: var(--space-md);
 }
 
@@ -535,7 +535,7 @@ body {
 .modal-detail {
     display: flex;
     gap: var(--space-sm);
-    font-size: 0.9rem;
+    font-size: 1rem;
 }
 
 .modal-detail-label {
@@ -572,11 +572,11 @@ body {
     }
 
     .nav-links a {
-        font-size: 0.85rem;
+        font-size: 0.9rem;
     }
 
     .philosophy-list li {
-        font-size: 1.15rem;
+        font-size: 1.25rem;
     }
 
     .logos-grid {
