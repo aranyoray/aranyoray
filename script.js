@@ -176,6 +176,89 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // Gallery carousel
+    const galleryTrack = document.getElementById('gallery-track');
+    const galleryPrev = document.getElementById('gallery-prev');
+    const galleryNext = document.getElementById('gallery-next');
+    const galleryDotsContainer = document.getElementById('gallery-dots');
+
+    if (galleryTrack && galleryPrev && galleryNext && galleryDotsContainer) {
+        let galleryIndex = 0;
+
+        const getVisibleCount = () => {
+            if (window.innerWidth <= 600) return 1;
+            if (window.innerWidth <= 900) return 2;
+            return 3;
+        };
+
+        const getMaxIndex = () => {
+            const items = galleryTrack.children.length;
+            return Math.max(0, items - getVisibleCount());
+        };
+
+        const updateGallery = () => {
+            const visibleCount = getVisibleCount();
+            const gap = 16; // 1rem
+            const containerWidth = galleryTrack.parentElement.offsetWidth;
+            const itemWidth = (containerWidth - gap * (visibleCount - 1)) / visibleCount;
+            const offset = galleryIndex * (itemWidth + gap);
+            galleryTrack.style.transform = `translateX(-${offset}px)`;
+
+            galleryPrev.disabled = galleryIndex === 0;
+            galleryNext.disabled = galleryIndex >= getMaxIndex();
+
+            // Update dots
+            const dots = galleryDotsContainer.querySelectorAll('.gallery-dot');
+            dots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === galleryIndex);
+            });
+        };
+
+        const buildDots = () => {
+            const maxIdx = getMaxIndex();
+            galleryDotsContainer.innerHTML = '';
+            for (let i = 0; i <= maxIdx; i++) {
+                const dot = document.createElement('button');
+                dot.className = 'gallery-dot' + (i === galleryIndex ? ' active' : '');
+                dot.setAttribute('aria-label', `Go to slide ${i + 1}`);
+                dot.addEventListener('click', () => {
+                    galleryIndex = i;
+                    updateGallery();
+                });
+                galleryDotsContainer.appendChild(dot);
+            }
+        };
+
+        galleryPrev.addEventListener('click', () => {
+            if (galleryIndex > 0) {
+                galleryIndex--;
+                updateGallery();
+            }
+        });
+
+        galleryNext.addEventListener('click', () => {
+            if (galleryIndex < getMaxIndex()) {
+                galleryIndex++;
+                updateGallery();
+            }
+        });
+
+        buildDots();
+        updateGallery();
+
+        let resizeTimer;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(() => {
+                if (galleryIndex > getMaxIndex()) {
+                    galleryIndex = getMaxIndex();
+                }
+                buildDots();
+                updateGallery();
+            }, 150);
+        });
+    }
+
     // Smooth scroll for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {

@@ -332,6 +332,131 @@ body {
     font-weight: 500;
 }
 
+/* ===== Activity Photos ===== */
+.activity-photos {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: var(--space-sm);
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    padding-bottom: 0.25rem;
+}
+
+.activity-photos::-webkit-scrollbar {
+    display: none;
+}
+
+.activity-photo {
+    flex-shrink: 0;
+    width: 180px;
+    height: 130px;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.activity-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s;
+}
+
+.activity-photo:hover img {
+    transform: scale(1.05);
+}
+
+/* ===== Photo Gallery ===== */
+.gallery-section {
+    padding: var(--space-xl) 0;
+    border-top: 1px solid var(--color-border);
+}
+
+.gallery-wrapper {
+    position: relative;
+}
+
+.gallery-track-container {
+    overflow: hidden;
+    border-radius: 12px;
+}
+
+.gallery-track {
+    display: flex;
+    gap: 1rem;
+    transition: transform 0.4s ease;
+}
+
+.gallery-item {
+    flex: 0 0 calc(33.333% - 0.667rem);
+    aspect-ratio: 4 / 3;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s;
+}
+
+.gallery-item:hover img {
+    transform: scale(1.05);
+}
+
+.gallery-nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin-top: var(--space-md);
+}
+
+.gallery-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1px solid var(--color-border);
+    background: var(--color-bg);
+    color: var(--color-text);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: border-color 0.2s;
+}
+
+.gallery-btn:hover:not(:disabled) {
+    border-color: var(--color-text);
+}
+
+.gallery-btn:disabled {
+    opacity: 0.3;
+    cursor: default;
+}
+
+.gallery-dots {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.gallery-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--color-border);
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s;
+    padding: 0;
+}
+
+.gallery-dot.active {
+    background: var(--color-text);
+}
+
 /* ===== Philosophy ===== */
 .philosophy {
     padding: var(--space-xl) 0;
@@ -595,6 +720,21 @@ body {
 
     .modal-image {
         height: 150px;
+    }
+
+    .activity-photo {
+        width: 140px;
+        height: 100px;
+    }
+
+    .gallery-item {
+        flex: 0 0 calc(100% - 0rem);
+    }
+}
+
+@media (min-width: 601px) and (max-width: 900px) {
+    .gallery-item {
+        flex: 0 0 calc(50% - 0.5rem);
     }
 }
 
