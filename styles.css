@@ -383,26 +383,73 @@ body {
 
 .gallery-track {
     display: flex;
-    gap: 1rem;
+    gap: 1.5rem;
     transition: transform 0.4s ease;
 }
 
 .gallery-item {
-    flex: 0 0 calc(33.333% - 0.667rem);
+    flex: 0 0 100%;
+    display: flex;
+    gap: var(--space-md);
+    align-items: stretch;
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: border-color 0.2s;
+}
+
+.gallery-item:hover {
+    border-color: var(--color-text-tertiary);
+}
+
+.gallery-item-photo {
+    flex: 0 0 55%;
     aspect-ratio: 4 / 3;
-    border-radius: 8px;
     overflow: hidden;
 }
 
-.gallery-item img {
+.gallery-item-photo img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     transition: transform 0.3s;
 }
 
-.gallery-item:hover img {
-    transform: scale(1.05);
+.gallery-item:hover .gallery-item-photo img {
+    transform: scale(1.03);
+}
+
+.gallery-item-details {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: var(--space-md) var(--space-md) var(--space-md) 0;
+    gap: 0.5rem;
+}
+
+.gallery-item-tag {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-text-tertiary);
+}
+
+.gallery-item-title {
+    font-family: var(--font-serif);
+    font-size: 1.35rem;
+    font-weight: 400;
+    color: var(--color-text);
+    margin: 0;
+}
+
+.gallery-item-desc {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--color-text-secondary);
+    margin: 0;
 }
 
 .gallery-nav {
@@ -455,6 +502,129 @@ body {
 
 .gallery-dot.active {
     background: var(--color-text);
+}
+
+/* ===== Lightbox ===== */
+.lightbox-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.92);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s, visibility 0.3s;
+    padding: var(--space-md);
+}
+
+.lightbox-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.lightbox-close {
+    position: absolute;
+    top: var(--space-sm);
+    right: var(--space-sm);
+    width: 44px;
+    height: 44px;
+    border: none;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    font-size: 1.5rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    z-index: 10;
+    transition: background 0.2s;
+}
+
+.lightbox-close:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.lightbox-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 48px;
+    height: 48px;
+    border: none;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    z-index: 10;
+    transition: background 0.2s;
+}
+
+.lightbox-arrow:hover {
+    background: rgba(255, 255, 255, 0.25);
+}
+
+.lightbox-arrow:disabled {
+    opacity: 0.2;
+    cursor: default;
+}
+
+.lightbox-arrow-left {
+    left: var(--space-sm);
+}
+
+.lightbox-arrow-right {
+    right: var(--space-sm);
+}
+
+.lightbox-content {
+    max-width: 900px;
+    width: 100%;
+    text-align: center;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: pan-y;
+}
+
+.lightbox-image {
+    max-width: 100%;
+    max-height: 70vh;
+    object-fit: contain;
+    border-radius: 8px;
+    transition: opacity 0.2s;
+}
+
+.lightbox-details {
+    margin-top: var(--space-sm);
+    color: #fff;
+}
+
+.lightbox-counter {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.5);
+    letter-spacing: 0.05em;
+}
+
+.lightbox-title {
+    font-family: var(--font-serif);
+    font-size: 1.25rem;
+    font-weight: 400;
+    margin: 0.25rem 0;
+    color: #fff;
+}
+
+.lightbox-desc {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin: 0;
 }
 
 /* ===== Philosophy ===== */
@@ -728,13 +898,42 @@ body {
     }
 
     .gallery-item {
-        flex: 0 0 calc(100% - 0rem);
+        flex: 0 0 100%;
+        flex-direction: column;
     }
-}
 
-@media (min-width: 601px) and (max-width: 900px) {
-    .gallery-item {
-        flex: 0 0 calc(50% - 0.5rem);
+    .gallery-item-photo {
+        flex: none;
+        aspect-ratio: 16 / 10;
+    }
+
+    .gallery-item-details {
+        padding: var(--space-sm);
+    }
+
+    .gallery-item-title {
+        font-size: 1.15rem;
+    }
+
+    .gallery-item-desc {
+        font-size: 0.85rem;
+    }
+
+    .lightbox-arrow {
+        width: 36px;
+        height: 36px;
+    }
+
+    .lightbox-arrow-left {
+        left: var(--space-xs);
+    }
+
+    .lightbox-arrow-right {
+        right: var(--space-xs);
+    }
+
+    .lightbox-image {
+        max-height: 60vh;
     }
 }
 
@@ -751,7 +950,8 @@ body {
     }
 
     .modal-overlay,
-    .modal {
+    .modal,
+    .lightbox-overlay {
         transition: none;
     }
 }

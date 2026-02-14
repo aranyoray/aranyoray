@@ -176,38 +176,28 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Gallery carousel
+    // Gallery carousel (one item per slide)
     const galleryTrack = document.getElementById('gallery-track');
     const galleryPrev = document.getElementById('gallery-prev');
     const galleryNext = document.getElementById('gallery-next');
     const galleryDotsContainer = document.getElementById('gallery-dots');
+    const galleryItems = galleryTrack ? galleryTrack.querySelectorAll('.gallery-item') : [];
 
     if (galleryTrack && galleryPrev && galleryNext && galleryDotsContainer) {
         let galleryIndex = 0;
+        const totalItems = galleryItems.length;
 
-        const getVisibleCount = () => {
-            if (window.innerWidth <= 600) return 1;
-            if (window.innerWidth <= 900) return 2;
-            return 3;
-        };
-
-        const getMaxIndex = () => {
-            const items = galleryTrack.children.length;
-            return Math.max(0, items - getVisibleCount());
-        };
+        const getMaxIndex = () => Math.max(0, totalItems - 1);
 
         const updateGallery = () => {
-            const visibleCount = getVisibleCount();
-            const gap = 16; // 1rem
+            const gap = 24; // 1.5rem
             const containerWidth = galleryTrack.parentElement.offsetWidth;
-            const itemWidth = (containerWidth - gap * (visibleCount - 1)) / visibleCount;
-            const offset = galleryIndex * (itemWidth + gap);
+            const offset = galleryIndex * (containerWidth + gap);
             galleryTrack.style.transform = `translateX(-${offset}px)`;
 
             galleryPrev.disabled = galleryIndex === 0;
             galleryNext.disabled = galleryIndex >= getMaxIndex();
 
-            // Update dots
             const dots = galleryDotsContainer.querySelectorAll('.gallery-dot');
             dots.forEach((dot, i) => {
                 dot.classList.toggle('active', i === galleryIndex);
@@ -215,12 +205,11 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         const buildDots = () => {
-            const maxIdx = getMaxIndex();
             galleryDotsContainer.innerHTML = '';
-            for (let i = 0; i <= maxIdx; i++) {
+            for (let i = 0; i < totalItems; i++) {
                 const dot = document.createElement('button');
                 dot.className = 'gallery-dot' + (i === galleryIndex ? ' active' : '');
-                dot.setAttribute('aria-label', `Go to slide ${i + 1}`);
+                dot.setAttribute('aria-label', `Go to photo ${i + 1}`);
                 dot.addEventListener('click', () => {
                     galleryIndex = i;
                     updateGallery();
@@ -253,10 +242,131 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (galleryIndex > getMaxIndex()) {
                     galleryIndex = getMaxIndex();
                 }
-                buildDots();
                 updateGallery();
             }, 150);
         });
+
+        // Click on gallery item opens lightbox
+        galleryItems.forEach((item) => {
+            item.addEventListener('click', () => {
+                const idx = parseInt(item.getAttribute('data-index'), 10);
+                openLightbox(idx);
+            });
+        });
+    }
+
+    // Lightbox
+    const lightboxOverlay = document.getElementById('lightbox-overlay');
+    const lightboxImage = document.getElementById('lightbox-image');
+    const lightboxTitle = document.getElementById('lightbox-title');
+    const lightboxDesc = document.getElementById('lightbox-desc');
+    const lightboxCounter = document.getElementById('lightbox-counter');
+    const lightboxPrevBtn = document.getElementById('lightbox-prev');
+    const lightboxNextBtn = document.getElementById('lightbox-next');
+    const lightboxCloseBtn = document.getElementById('lightbox-close');
+
+    let lightboxIndex = 0;
+    let lightboxTouchStartX = 0;
+    let lightboxTouchEndX = 0;
+
+    function getLightboxData() {
+        const items = [];
+        galleryItems.forEach((item) => {
+            const img = item.querySelector('.gallery-item-photo img');
+            const title = item.querySelector('.gallery-item-title');
+            const desc = item.querySelector('.gallery-item-desc');
+            items.push({
+                src: img ? img.src : '',
+                alt: img ? img.alt : '',
+                title: title ? title.textContent : '',
+                desc: desc ? desc.textContent : ''
+            });
+        });
+        return items;
+    }
+
+    function updateLightbox() {
+        const data = getLightboxData();
+        if (data.length === 0) return;
+        const item = data[lightboxIndex];
+        lightboxImage.src = item.src;
+        lightboxImage.alt = item.alt;
+        lightboxTitle.textContent = item.title;
+        lightboxDesc.textContent = item.desc;
+        lightboxCounter.textContent = `${lightboxIndex + 1} / ${data.length}`;
+        lightboxPrevBtn.disabled = lightboxIndex === 0;
+        lightboxNextBtn.disabled = lightboxIndex >= data.length - 1;
+    }
+
+    function openLightbox(index) {
+        lightboxIndex = index;
+        updateLightbox();
+        lightboxOverlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+        lightboxOverlay.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    if (lightboxOverlay) {
+        lightboxCloseBtn.addEventListener('click', closeLightbox);
+
+        lightboxOverlay.addEventListener('click', (e) => {
+            if (e.target === lightboxOverlay) closeLightbox();
+        });
+
+        lightboxPrevBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (lightboxIndex > 0) {
+                lightboxIndex--;
+                updateLightbox();
+            }
+        });
+
+        lightboxNextBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (lightboxIndex < getLightboxData().length - 1) {
+                lightboxIndex++;
+                updateLightbox();
+            }
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (!lightboxOverlay.classList.contains('active')) return;
+            if (e.key === 'Escape') closeLightbox();
+            if (e.key === 'ArrowLeft' && lightboxIndex > 0) {
+                lightboxIndex--;
+                updateLightbox();
+            }
+            if (e.key === 'ArrowRight' && lightboxIndex < getLightboxData().length - 1) {
+                lightboxIndex++;
+                updateLightbox();
+            }
+        });
+
+        // Touch swipe support
+        const lightboxContent = document.getElementById('lightbox-content');
+        lightboxContent.addEventListener('touchstart', (e) => {
+            lightboxTouchStartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+
+        lightboxContent.addEventListener('touchend', (e) => {
+            lightboxTouchEndX = e.changedTouches[0].screenX;
+            const diff = lightboxTouchStartX - lightboxTouchEndX;
+            const threshold = 50;
+            if (Math.abs(diff) > threshold) {
+                if (diff > 0 && lightboxIndex < getLightboxData().length - 1) {
+                    lightboxIndex++;
+                    updateLightbox();
+                } else if (diff < 0 && lightboxIndex > 0) {
+                    lightboxIndex--;
+                    updateLightbox();
+                }
+            }
+        }, { passive: true });
     }
 
     // Smooth scroll for anchor links
