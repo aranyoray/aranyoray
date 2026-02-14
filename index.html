@@ -316,14 +316,86 @@
                 <div class="gallery-wrapper">
                     <div class="gallery-track-container">
                         <div class="gallery-track" id="gallery-track">
-                            <div class="gallery-item"><img src="Headshot-Aranyo-Ray-cto-komal.jpg" alt="Aranyo Ray professional headshot at Yale" loading="lazy"></div>
-                            <div class="gallery-item"><img src="group-photo-yale-aranyo.webp" alt="Aranyo Ray Yale group photo by the lake" loading="lazy"></div>
-                            <div class="gallery-item"><img src="photo-yale-aranyo.jpeg" alt="Aranyo Ray with friends on Yale campus" loading="lazy"></div>
-                            <div class="gallery-item"><img src="celebration-yale-aranyo.jpeg" alt="Aranyo Ray at Yale cultural celebration" loading="lazy"></div>
-                            <div class="gallery-item"><img src="Pohela-Boishak-Bengali-New-Year-Group-Photo-aranyo-yale.jpeg" alt="Pohela Boishakh Bengali New Year celebration at Yale" loading="lazy"></div>
-                            <div class="gallery-item"><img src="Harvard-event-selfie-aranyo.jpg" alt="Aranyo Ray at Harvard Yale game" loading="lazy"></div>
-                            <div class="gallery-item"><img src="harvard-goup-photo-event-aranyo.jpeg" alt="Aranyo Ray group photo at Harvard Yale event" loading="lazy"></div>
-                            <div class="gallery-item"><img src="organization-aranyo-usa-komal.jpeg" alt="Aranyo Ray Asian American Cultural Center award at Yale" loading="lazy"></div>
+                            <div class="gallery-item" data-index="0">
+                                <div class="gallery-item-photo">
+                                    <img src="Headshot-Aranyo-Ray-cto-komal.jpg" alt="Aranyo Ray professional headshot at Yale" loading="lazy">
+                                </div>
+                                <div class="gallery-item-details">
+                                    <span class="gallery-item-tag">Professional</span>
+                                    <h3 class="gallery-item-title">CTO at Komal</h3>
+                                    <p class="gallery-item-desc">Professional headshot during time as Chief Technology Officer at Komal, Yale.</p>
+                                </div>
+                            </div>
+                            <div class="gallery-item" data-index="1">
+                                <div class="gallery-item-photo">
+                                    <img src="group-photo-yale-aranyo.webp" alt="Aranyo Ray Yale group photo by the lake" loading="lazy">
+                                </div>
+                                <div class="gallery-item-details">
+                                    <span class="gallery-item-tag">Yale</span>
+                                    <h3 class="gallery-item-title">By the Lake</h3>
+                                    <p class="gallery-item-desc">Group photo with friends by the lake at Yale University.</p>
+                                </div>
+                            </div>
+                            <div class="gallery-item" data-index="2">
+                                <div class="gallery-item-photo">
+                                    <img src="photo-yale-aranyo.jpeg" alt="Aranyo Ray with friends on Yale campus" loading="lazy">
+                                </div>
+                                <div class="gallery-item-details">
+                                    <span class="gallery-item-tag">Yale</span>
+                                    <h3 class="gallery-item-title">On Campus</h3>
+                                    <p class="gallery-item-desc">With friends on the Yale campus grounds.</p>
+                                </div>
+                            </div>
+                            <div class="gallery-item" data-index="3">
+                                <div class="gallery-item-photo">
+                                    <img src="celebration-yale-aranyo.jpeg" alt="Aranyo Ray at Yale cultural celebration" loading="lazy">
+                                </div>
+                                <div class="gallery-item-details">
+                                    <span class="gallery-item-tag">Culture</span>
+                                    <h3 class="gallery-item-title">Cultural Celebration</h3>
+                                    <p class="gallery-item-desc">Celebrating cultural diversity at Yale University.</p>
+                                </div>
+                            </div>
+                            <div class="gallery-item" data-index="4">
+                                <div class="gallery-item-photo">
+                                    <img src="Pohela-Boishak-Bengali-New-Year-Group-Photo-aranyo-yale.jpeg" alt="Pohela Boishakh Bengali New Year celebration at Yale" loading="lazy">
+                                </div>
+                                <div class="gallery-item-details">
+                                    <span class="gallery-item-tag">Culture</span>
+                                    <h3 class="gallery-item-title">Pohela Boishakh</h3>
+                                    <p class="gallery-item-desc">Bengali New Year celebration with the community at Yale.</p>
+                                </div>
+                            </div>
+                            <div class="gallery-item" data-index="5">
+                                <div class="gallery-item-photo">
+                                    <img src="Harvard-event-selfie-aranyo.jpg" alt="Aranyo Ray at Harvard Yale game" loading="lazy">
+                                </div>
+                                <div class="gallery-item-details">
+                                    <span class="gallery-item-tag">Events</span>
+                                    <h3 class="gallery-item-title">Harvard-Yale Game</h3>
+                                    <p class="gallery-item-desc">At the legendary Harvard-Yale rivalry game.</p>
+                                </div>
+                            </div>
+                            <div class="gallery-item" data-index="6">
+                                <div class="gallery-item-photo">
+                                    <img src="harvard-goup-photo-event-aranyo.jpeg" alt="Aranyo Ray group photo at Harvard Yale event" loading="lazy">
+                                </div>
+                                <div class="gallery-item-details">
+                                    <span class="gallery-item-tag">Events</span>
+                                    <h3 class="gallery-item-title">Harvard-Yale Event</h3>
+                                    <p class="gallery-item-desc">Group photo at the Harvard-Yale event gathering.</p>
+                                </div>
+                            </div>
+                            <div class="gallery-item" data-index="7">
+                                <div class="gallery-item-photo">
+                                    <img src="organization-aranyo-usa-komal.jpeg" alt="Aranyo Ray Asian American Cultural Center award at Yale" loading="lazy">
+                                </div>
+                                <div class="gallery-item-details">
+                                    <span class="gallery-item-tag">Award</span>
+                                    <h3 class="gallery-item-title">AACC Award</h3>
+                                    <p class="gallery-item-desc">Asian American Cultural Center award recognition at Yale University.</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="gallery-nav">
@@ -337,6 +409,25 @@
                     </div>
                 </div>
             </section>
+
+            <!-- Photo Lightbox -->
+            <div class="lightbox-overlay" id="lightbox-overlay">
+                <button class="lightbox-close" id="lightbox-close" aria-label="Close lightbox">&times;</button>
+                <button class="lightbox-arrow lightbox-arrow-left" id="lightbox-prev" aria-label="Previous photo">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+                </button>
+                <div class="lightbox-content" id="lightbox-content">
+                    <img class="lightbox-image" id="lightbox-image" src="" alt="">
+                    <div class="lightbox-details" id="lightbox-details">
+                        <span class="lightbox-counter" id="lightbox-counter"></span>
+                        <h3 class="lightbox-title" id="lightbox-title"></h3>
+                        <p class="lightbox-desc" id="lightbox-desc"></p>
+                    </div>
+                </div>
+                <button class="lightbox-arrow lightbox-arrow-right" id="lightbox-next" aria-label="Next photo">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+                </button>
+            </div>
 
             <!-- Closing Statement -->
             <section class="closing-statement">
