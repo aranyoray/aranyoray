@@ -233,7 +233,7 @@ body {
 }
 
 .year-content {
-    max-width: 560px;
+    max-width: 600px;
 }
 
 .year-headline {
@@ -332,7 +332,59 @@ body {
     font-weight: 500;
 }
 
+/* ===== Side-by-side Layout (visuals left, text right) ===== */
+.year-content.has-photos {
+    display: flex;
+    gap: 2.5rem;
+    max-width: none;
+    align-items: flex-start;
+}
+
+.year-content.has-photos .year-text {
+    flex: 1;
+    min-width: 0;
+}
+
+/* ===== Project Cards as Left Column ===== */
+.project-cards--left {
+    flex-direction: column;
+    flex-shrink: 0;
+    width: 140px;
+    margin-top: 0.15rem;
+    gap: 1rem;
+}
+
+.project-cards--left .project-card {
+    width: 100%;
+}
+
+.project-cards--left .card-image {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 3;
+    border-radius: 10px;
+}
+
+.project-cards--left .card-emoji {
+    font-size: 2.25rem;
+}
+
+.project-cards--left .card-label {
+    font-size: 0.8rem;
+}
+
 /* ===== Activity Photos ===== */
+.year-content.has-photos .activity-photos {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    flex-shrink: 0;
+    width: 180px;
+    margin-top: 0;
+    overflow-x: visible;
+    padding-bottom: 0;
+}
+
 .activity-photos {
     display: flex;
     gap: 0.75rem;
@@ -353,6 +405,12 @@ body {
     height: 130px;
     border-radius: 8px;
     overflow: hidden;
+}
+
+.year-content.has-photos .activity-photo {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 3;
 }
 
 .activity-photo img {
@@ -842,10 +900,35 @@ body {
     color: var(--color-text);
 }
 
-/* ===== Responsive ===== */
+/* ===== Responsive — Tablet ===== */
+@media (max-width: 768px) {
+    .year-content.has-photos {
+        gap: 1.5rem;
+    }
+
+    .year-content.has-photos .activity-photos {
+        width: 140px;
+    }
+
+    .project-cards--left {
+        width: 110px;
+    }
+
+    .project-cards--left .card-emoji {
+        font-size: 1.75rem;
+    }
+}
+
+/* ===== Responsive — Mobile ===== */
 @media (max-width: 600px) {
+    body {
+        font-size: 16px;
+        overflow-x: hidden;
+    }
+
     .container {
         padding: 0 var(--space-sm);
+        overflow-x: hidden;
     }
 
     .hero {
@@ -854,12 +937,33 @@ body {
 
     .year-block {
         grid-template-columns: 1fr;
-        gap: var(--space-xs);
+        gap: 0.25rem;
+        padding: var(--space-md) 0;
+    }
+
+    .year-content,
+    .year-content.has-photos {
+        max-width: 100%;
     }
 
     .year-marker {
         padding-top: 0;
-        margin-bottom: var(--space-xs);
+        margin-bottom: 0.25rem;
+        font-size: 0.85rem;
+    }
+
+    .year-headline {
+        font-size: 1.25rem;
+    }
+
+    .year-context {
+        font-size: 0.9rem;
+    }
+
+    .outcomes li {
+        font-size: 0.9rem;
+        line-height: 1.55;
+        margin-bottom: 0.5rem;
     }
 
     .nav-links {
@@ -892,9 +996,74 @@ body {
         height: 150px;
     }
 
+    /* Stack: text first, visuals below on mobile */
+    .year-content.has-photos {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    .year-content.has-photos .year-text {
+        order: -1;
+    }
+
+    /* Activity photos — horizontal scroll below text, contained */
+    .year-content.has-photos .activity-photos {
+        flex-direction: row;
+        width: calc(100vw - 2rem);
+        max-width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+        gap: 0.5rem;
+        padding-bottom: 0.25rem;
+    }
+
+    .year-content.has-photos .activity-photos::-webkit-scrollbar {
+        display: none;
+    }
+
+    .year-content.has-photos .activity-photo {
+        width: 200px;
+        height: 140px;
+        aspect-ratio: auto;
+        flex-shrink: 0;
+        border-radius: 10px;
+    }
+
     .activity-photo {
-        width: 140px;
-        height: 100px;
+        width: 200px;
+        height: 140px;
+    }
+
+    /* Project cards — inline row below text on mobile */
+    .project-cards--left {
+        flex-direction: row;
+        width: 100%;
+        max-width: 100%;
+        gap: 0.75rem;
+        margin-top: 0;
+        flex-wrap: wrap;
+    }
+
+    .project-cards--left .project-card {
+        width: auto;
+        flex-shrink: 0;
+    }
+
+    .project-cards--left .card-image {
+        width: 72px;
+        height: 54px;
+        aspect-ratio: auto;
+        border-radius: 8px;
+    }
+
+    .project-cards--left .card-emoji {
+        font-size: 1.4rem;
+    }
+
+    .project-cards--left .card-label {
+        font-size: 0.7rem;
     }
 
     .gallery-item {
