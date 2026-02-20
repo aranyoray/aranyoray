@@ -176,27 +176,29 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Gallery carousel (one item per slide)
-    const galleryTrack = document.getElementById('gallery-track');
+    // Gallery split-view carousel (image crossfade + text slide)
+    const galleryImagePanel = document.getElementById('gallery-image-panel');
+    const gallerySlidesContainer = document.getElementById('gallery-slides');
     const galleryPrev = document.getElementById('gallery-prev');
     const galleryNext = document.getElementById('gallery-next');
     const galleryDotsContainer = document.getElementById('gallery-dots');
-    const galleryItems = galleryTrack ? galleryTrack.querySelectorAll('.gallery-item') : [];
+    const galleryImages = galleryImagePanel ? galleryImagePanel.querySelectorAll('.gallery-image') : [];
+    const gallerySlides = gallerySlidesContainer ? gallerySlidesContainer.querySelectorAll('.gallery-slide') : [];
 
-    if (galleryTrack && galleryPrev && galleryNext && galleryDotsContainer) {
+    if (galleryImagePanel && gallerySlidesContainer && galleryPrev && galleryNext && galleryDotsContainer) {
         let galleryIndex = 0;
-        const totalItems = galleryItems.length;
-
-        const getMaxIndex = () => Math.max(0, totalItems - 1);
+        const totalItems = galleryImages.length;
 
         const updateGallery = () => {
-            const gap = 24; // 1.5rem
-            const containerWidth = galleryTrack.parentElement.offsetWidth;
-            const offset = galleryIndex * (containerWidth + gap);
-            galleryTrack.style.transform = `translateX(-${offset}px)`;
+            galleryImages.forEach((img, i) => {
+                img.classList.toggle('gallery-image--active', i === galleryIndex);
+            });
+            gallerySlides.forEach((slide, i) => {
+                slide.classList.toggle('gallery-slide--active', i === galleryIndex);
+            });
 
             galleryPrev.disabled = galleryIndex === 0;
-            galleryNext.disabled = galleryIndex >= getMaxIndex();
+            galleryNext.disabled = galleryIndex >= totalItems - 1;
 
             const dots = galleryDotsContainer.querySelectorAll('.gallery-dot');
             dots.forEach((dot, i) => {
@@ -226,7 +228,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         galleryNext.addEventListener('click', () => {
-            if (galleryIndex < getMaxIndex()) {
+            if (galleryIndex < totalItems - 1) {
                 galleryIndex++;
                 updateGallery();
             }
@@ -235,25 +237,49 @@ document.addEventListener('DOMContentLoaded', () => {
         buildDots();
         updateGallery();
 
-        let resizeTimer;
-        window.addEventListener('resize', () => {
-            clearTimeout(resizeTimer);
-            resizeTimer = setTimeout(() => {
-                if (galleryIndex > getMaxIndex()) {
-                    galleryIndex = getMaxIndex();
-                }
-                updateGallery();
-            }, 150);
-        });
-
-        // Click on gallery item opens lightbox
-        galleryItems.forEach((item) => {
-            item.addEventListener('click', () => {
-                const idx = parseInt(item.getAttribute('data-index'), 10);
-                openLightbox(idx);
-            });
+        // Click on image panel opens lightbox
+        galleryImagePanel.addEventListener('click', () => {
+            openLightbox(galleryIndex);
         });
     }
+
+    // Mini photo carousels inside each year-block
+    document.querySelectorAll('.activity-photos').forEach(container => {
+        const photos = container.querySelectorAll('.activity-photo');
+        if (photos.length <= 1) {
+            // Single photo — just mark it active
+            if (photos[0]) photos[0].classList.add('active');
+            return;
+        }
+
+        // Mark first as active
+        photos[0].classList.add('active');
+        let current = 0;
+
+        // Build dots
+        const dotsDiv = document.createElement('div');
+        dotsDiv.className = 'photo-dots';
+        photos.forEach((_, i) => {
+            const dot = document.createElement('button');
+            dot.className = 'photo-dot' + (i === 0 ? ' active' : '');
+            dot.addEventListener('click', () => goTo(i));
+            dotsDiv.appendChild(dot);
+        });
+        container.appendChild(dotsDiv);
+
+        function goTo(idx) {
+            photos[current].classList.remove('active');
+            dotsDiv.children[current].classList.remove('active');
+            current = idx;
+            photos[current].classList.add('active');
+            dotsDiv.children[current].classList.add('active');
+        }
+
+        // Auto-advance every 4 seconds
+        setInterval(() => {
+            goTo((current + 1) % photos.length);
+        }, 4000);
+    });
 
     // Lightbox
     const lightboxOverlay = document.getElementById('lightbox-overlay');
@@ -271,10 +297,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function getLightboxData() {
         const items = [];
-        galleryItems.forEach((item) => {
-            const img = item.querySelector('.gallery-item-photo img');
-            const title = item.querySelector('.gallery-item-title');
-            const desc = item.querySelector('.gallery-item-desc');
+        galleryImages.forEach((img, i) => {
+            const slide = gallerySlides[i];
+            const title = slide ? slide.querySelector('.gallery-slide-title') : null;
+            const desc = slide ? slide.querySelector('.gallery-slide-desc') : null;
             items.push({
                 src: img ? img.src : '',
                 alt: img ? img.alt : '',
