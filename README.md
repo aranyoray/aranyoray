@@ -5,7 +5,7 @@ Hi all! I'm Aranyo, a full stack developer who loves exploring different areas o
 [![X/Twitter](https://img.shields.io/badge/X-%231DA1F2.svg?style=flat-square&logo=x&logoColor=white)](https://x.com/aranyoray)
 [![Dribbble](https://img.shields.io/badge/Dribbble-%23EA4C89.svg?style=flat-square&logo=dribbble&logoColor=white)](https://dribbble.com/aranyoray)
 
-## 🛠 Tech Stack:
+## 🛠 My Stack:
 ![Java](https://img.shields.io/badge/Java-%23ED8B00.svg?style=flat-square&logo=java&logoColor=white)
 ![Python](https://img.shields.io/badge/Python-%2314354C.svg?style=flat-square&logo=python&logoColor=white)
 ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-%236DB33F.svg?style=flat-square&logo=spring-boot&logoColor=white)
@@ -35,4 +35,3 @@ Hi all! I'm Aranyo, a full stack developer who loves exploring different areas o
 ![ElasticSearch](https://img.shields.io/badge/ElasticSearch-%23005571.svg?style=flat-square&logo=elasticsearch&logoColor=white)
 ![Kibana](https://img.shields.io/badge/Kibana-%23005571.svg?style=flat-square&logo=kibana&logoColor=white)
 ![SonarQube](https://img.shields.io/badge/SonarQube-%234E9BCD.svg?style=flat-square&logo=sonarqube&logoColor=white)
->>>>>>> f872cb4d04dda2dd1d7bca666c546494afd36435
