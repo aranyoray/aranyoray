@@ -88,6 +88,7 @@
   }
 
   .page { max-width: var(--max); margin: 0 auto; padding: 0 20px 80px; }
+  #work, #approach, #contact { scroll-margin-top: 72px; }
 
   /* HERO */
   .hero { padding: 52px 0 36px; animation: fadeUp 0.55s ease both; }
@@ -626,9 +627,10 @@
   <div class="nav-inner">
     <div class="nav-logo">AR</div>
     <ul class="nav-links">
-      <li><a href="#">Work</a></li>
-      <li><a href="#">Approach</a></li>
-      <li><a href="#">Contact</a></li>
+      <li><a href="#work">Work</a></li>
+      <li><a href="#approach">Approach</a></li>
+      <li><a href="/itihas/">Itihas ↗</a></li>
+      <li><a href="#contact">Contact</a></li>
     </ul>
     <div style="display: flex; align-items: center; gap: 12px;">
       <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
@@ -652,7 +654,7 @@
         <p class="hero-tagline"><strong>Founder &amp; Builder</strong> — Scaling systems from bits to atoms.</p>
         <div class="hero-actions">
           <a href="mailto:aranyoray@gmail.com" class="btn-primary">Get in touch</a>
-          <a href="https://linkedin.com" target="_blank" class="btn-secondary">LinkedIn →</a>
+          <a href="https://www.linkedin.com/in/aranyo/" target="_blank" rel="noopener" class="btn-secondary">LinkedIn →</a>
         </div>
       </div>
 
@@ -771,7 +773,7 @@
     </div>
 
     <!-- TIMELINE -->
-    <div class="card card-full">
+    <div class="card card-full" id="work">
       <div class="card-label">Sidequests</div>
       <ul class="timeline">
         <li class="tl-item" onmouseenter="showPreview('assets/stealth.png', event)" onmouseleave="hidePreview()">
@@ -948,7 +950,7 @@
     </div>
 
     <!-- APPROACH -->
-    <div class="card card-full">
+    <div class="card card-full" id="approach">
       <div class="card-label">Approach</div>
       <div class="steps-nav">
         <button class="step-btn active" onclick="showStep(1,this)">01</button>
@@ -1073,7 +1075,7 @@
     </div>
 
     <!-- CONTACT -->
-    <div class="card contact-card">
+    <div class="card contact-card" id="contact">
       <div class="contact-text">
         <h3>Working on something complex, early, or messy?</h3>
         <p>If you're doing real work — I'm interested.</p>
@@ -1083,8 +1085,9 @@
 
     <!-- SOCIAL -->
     <div class="social-row">
-      <a href="#" class="social-link">LinkedIn <span class="arrow">↗</span></a>
-      <a href="#" class="social-link">Twitter <span class="arrow">↗</span></a>
+      <a href="https://www.linkedin.com/in/aranyo/" target="_blank" rel="noopener" class="social-link">LinkedIn <span class="arrow">↗</span></a>
+      <a href="https://x.com/aranyoray" target="_blank" rel="noopener" class="social-link">X / Twitter <span class="arrow">↗</span></a>
+      <a href="/itihas/" class="social-link">Itihas — the game <span class="arrow">↗</span></a>
     </div>
 
   </div>
