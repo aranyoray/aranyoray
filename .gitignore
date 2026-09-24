@@ -1,0 +1,7 @@
+itihas-app/node_modules/
+
+itihas-app/test-results/
+
+itihas-app/playwright-report/
+
+itihas-app/*.tsbuildinfo
