@@ -82,6 +82,7 @@
     G.decisions++;
     if (choice.historical) G.historical++;
     if (choice.meterDelta) for (const [k, v] of Object.entries(choice.meterDelta)) G.meters[k] = clamp((G.meters[k] || 0) + v);
+    if (choice.meterSet) for (const [k, v] of Object.entries(choice.meterSet)) G.meters[k] = clamp(v);
     if (choice.statDelta) for (const [k, v] of Object.entries(choice.statDelta)) G.stats[k] = clamp((G.stats[k] || 0) + v);
     if (choice.flags) choice.flags.forEach(f => G.flags.add(f));
     // choice-level recolor first
@@ -346,11 +347,23 @@
     board.appendChild(h);
     if (tile && wrap) {
       const tr = tile.getBoundingClientRect(), wr = wrap.getBoundingClientRect();
-      let left = tr.left - wr.left + tr.width / 2;
-      let top = tr.top - wr.top;
-      h.style.left = Math.max(8, Math.min(wr.width - 8, left)) + 'px';
-      h.style.top = Math.max(4, top - 6) + 'px';
-      // connector dot
+      let left = Math.max(8, Math.min(wr.width - 8, tr.left - wr.left + tr.width / 2));
+      let top = Math.max(4, tr.top - wr.top - 6);
+      h.style.left = left + 'px';
+      h.style.top = top + 'px';
+      // measure and nudge downward to avoid overlapping earlier headlines
+      // box (after translate(-50%,-100%)): x=[left-hw/2,left+hw/2], y=[t-hh,t]
+      const hw = h.offsetWidth, hh = h.offsetHeight;
+      const others = $$('.headline', board).filter(o => o !== h);
+      const overlaps = (t) => others.some(o => {
+        const ol = o.offsetLeft, ot = o.offsetTop, ow = o.offsetWidth, oh = o.offsetHeight;
+        const xo = Math.abs(left - ol) < (hw + ow) / 2 - 4;
+        const yo = (t - hh) < (ot + 4) && (ot - oh) < (t + 4);
+        return xo && yo;
+      });
+      let guard = 0;
+      while (overlaps(top) && guard++ < 14) top += hh + 6;
+      h.style.top = Math.min(top, wr.height - 4) + 'px';
       tile.classList.add('event-dot');
     } else { h.classList.add('float'); }
     requestAnimationFrame(() => h.classList.add('in'));
