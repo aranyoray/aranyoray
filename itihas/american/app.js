@@ -82,6 +82,7 @@
     G.decisions++;
     if (choice.historical) G.historical++;
     if (choice.meterDelta) for (const [k, v] of Object.entries(choice.meterDelta)) G.meters[k] = clamp((G.meters[k] || 0) + v);
+    if (choice.meterSet) for (const [k, v] of Object.entries(choice.meterSet)) G.meters[k] = clamp(v);
     if (choice.statDelta) for (const [k, v] of Object.entries(choice.statDelta)) G.stats[k] = clamp((G.stats[k] || 0) + v);
     if (choice.flags) choice.flags.forEach(f => G.flags.add(f));
     // choice-level recolor first

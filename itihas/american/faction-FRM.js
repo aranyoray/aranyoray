@@ -228,7 +228,7 @@
   situation:"The 13th Amendment is ratified. Black conventions in every Southern state are demanding the ballot. The Bureau is opening schools; white mobs are burning them. In three years you will have the 14th and 15th, two senators and a dozen congressmen. In twelve years the troops will leave and the Klan’s successors will run the South. Some say Kansas. Some say Liberia. Douglass says we are here to stay.",
   choices:[
     { id:"A", label:"Vote, hold office, build", summary:"Vote, hold office, build churches and schools, fight Redemption", historical:true,
-      meterDelta:{ UNION:6, FREEDOM:30 }, statDelta:{ ARMS:10, POWER:2 },
+      meterDelta:{ UNION:6 }, meterSet:{ FREEDOM:30 }, statDelta:{ ARMS:10, POWER:2 },
       effects:[
         { place:"Columbia, SC", region:"SC", text:"A Black-majority legislature; about 2,000 Black officeholders across the South; Hiram Revels takes Jefferson Davis’s old Senate seat in 1870.", insight:"for eight years Reconstruction was the most democratic experiment in American history.", recolor:[{ r:"VA", sl:"ABOLISHED", pin:"FREEDOM", size:3 },{ r:"NC", sl:"ABOLISHED", pin:"FREEDOM", size:3 },{ r:"SC", sl:"ABOLISHED", pin:"FREEDOM", size:3 },{ r:"GA", sl:"ABOLISHED", pin:"FREEDOM", size:3 },{ r:"FL", sl:"ABOLISHED", pin:"FREEDOM", size:3 },{ r:"AL", sl:"ABOLISHED", pin:"FREEDOM", size:3 },{ r:"MS", sl:"ABOLISHED", pin:"FREEDOM", size:3 },{ r:"LA", sl:"ABOLISHED", pin:"FREEDOM", size:3 },{ r:"TX", sl:"ABOLISHED", pin:"FREEDOM", size:3 },{ r:"AR", sl:"ABOLISHED", pin:"FREEDOM", size:3 },{ r:"TN", sl:"ABOLISHED", pin:"FREEDOM", size:3 }] },
         { place:"Hampton, VA", region:"VA", text:"Hampton 1868, Fisk 1866, Howard 1867: the colleges that would educate the next century’s leadership.", insight:"the schools outlasted the governments." },
@@ -237,7 +237,7 @@
         { place:"Washington, DC", region:"DC", text:"1877; the League dissolves; the Exodus begins.", insight:"the amendments stayed in the Constitution and out of practice until 1965.", recolor:[{ r:"DC", pin:"FREEDOM", size:1 }] }
       ] },
     { id:"B", label:"Exodus to Kansas and Liberia", summary:"Exodus: Kansas and Liberia", historical:false,
-      meterDelta:{ UNION:2, FREEDOM:32 }, statDelta:{ ARMS:-6, POWER:2 }, flags:["EMIGRATION"],
+      meterDelta:{ UNION:2 }, meterSet:{ FREEDOM:32 }, statDelta:{ ARMS:-6, POWER:2 }, flags:["EMIGRATION"],
       effects:[
         { place:"Nicodemus, KS", region:"KS", text:"Founded 1877; Pap Singleton’s colonies; 20,000 to 40,000 Exodusters in 1879.", insight:"Kansas was free soil and John Brown’s state, and it could not house them.", recolor:[{ r:"KS", pin:"FREEDOM", size:2 }] },
         { place:"Charleston, SC", region:"SC", text:"1878: the Azor sails for Liberia with 206 aboard; many die on the way.", insight:"Liberia was still the exit of last resort." },
@@ -246,7 +246,7 @@
         { place:"St. Louis, MO", region:"MO", text:"Relief committees feed the migrants through the winter.", insight:"freedom of movement needed a soup kitchen." }
       ] },
     { id:"C", label:"Armed self-defense leagues", summary:"Armed self-defense leagues and Union Leagues holding the ballot box; demand troops", historical:false,
-      meterDelta:{ UNION:-4, FREEDOM:45 }, statDelta:{ ARMS:4, POWER:4 }, flags:["RADICAL_RECON_HOLDS"],
+      meterDelta:{ UNION:-4 }, meterSet:{ FREEDOM:45 }, statDelta:{ ARMS:4, POWER:4 }, flags:["RADICAL_RECON_HOLDS"],
       effects:[
         { place:"Hamburg, SC", region:"SC", text:"July 1876: the Hamburg militia is armed and drilled; the massacre becomes a battle.", insight:"the difference between a massacre and a battle is who is armed." },
         { place:"Colfax, LA", region:"LA", text:"The courthouse holds with an organized militia (50%) or the massacre is larger (50%).", insight:"self-defense raises the stakes in both directions." },
