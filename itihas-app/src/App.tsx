@@ -508,6 +508,13 @@ export default function App() {
             Album <span className="count">{archive.cards.length}</span>
           </button>
           <button onClick={() => setModal("help")}>How to play</button>
+          <label className="game-switch-label">
+            <span className="sr-only">Switch game</span>
+            <select className="game-switch" aria-label="Switch game" value="cw" onChange={(event) => { if (event.target.value === "hd") window.location.href = import.meta.env.BASE_URL + "american/"; }}>
+              <option value="cw">The Cold War · 1947</option>
+              <option value="hd">A House Divided · 1850</option>
+            </select>
+          </label>
           <button
             className="settings-button"
             onClick={() => setModal("settings")}
@@ -940,6 +947,7 @@ export default function App() {
                   active={inspect || active}
                   onSelect={() => {}}
                   onEvent={openEvent}
+                  metrics={s!.meters}
                   playing
                 />
               </Suspense>

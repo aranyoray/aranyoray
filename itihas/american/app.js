@@ -179,8 +179,9 @@
     }
     const chips = Object.entries(G.foreign).map(([id, f]) =>
       `<div class="fchip ${f.side}" data-region="${id}" style="--tint:${f.tint}"><span>${f.name}</span></div>`).join('');
+    const boardStats = S.stats.map(st => `<div class="map-stat"><div><span>${st.label}</span><b id="map-sv-${st.id}">${Math.round(G.stats[st.id] || 0)}</b></div><div class="map-stat-track"><i id="map-sb-${st.id}" style="width:${Math.max(0, Math.min(100, G.stats[st.id] || 0))}%;background:${G.faction.color}"></i></div></div>`).join('');
     return `<div class="board-wrap">
-      <div class="board" style="grid-template-rows:repeat(${maxR + 1},1fr);grid-template-columns:repeat(${maxC + 1},1fr)">${tiles}</div>
+      <div class="board-map-row"><div class="board" style="grid-template-rows:repeat(${maxR + 1},1fr);grid-template-columns:repeat(${maxC + 1},1fr)">${tiles}</div><aside class="map-health" aria-label="Faction map health">${boardStats}</aside></div>
       <div class="foreign-row">${chips}</div>
       <div class="headlines" id="headlines"></div>
     </div>`;
@@ -191,6 +192,10 @@
       const t = $(`.tile[data-region="${id}"]`); if (!t) continue;
       const ghost = r.tier === 'ghost';
       t.style.background = ghost ? '#efeae0' : loyaltyColor(r.loyalty);
+      t.classList.toggle('bloc-union', !ghost && r.loyalty >= 65);
+      t.classList.toggle('bloc-contested', !ghost && r.loyalty >= 40 && r.loyalty < 65);
+      t.classList.toggle('bloc-confederate', !ghost && r.loyalty < 40);
+      t.classList.toggle('bloc-ghost', ghost);
       t.style.opacity = ghost ? '0.4' : (r.tier === 'terr' ? '0.82' : '1');
       t.style.setProperty('--stroke', SLAVERY_STROKE[r.slavery] || 'none');
       t.classList.toggle('slave', r.slavery === 'SLAVE');
@@ -246,7 +251,7 @@
   }
   function refreshBars() {
     S.meters.forEach(mt => { const v = Math.round(G.meters[mt.id] || 0); const e = $('#mv-' + mt.id); if (e) e.textContent = v; });
-    S.stats.forEach(s => { const v = Math.round(G.stats[s.id] || 0); const e = $('#sv-' + s.id); if (e) e.textContent = v; });
+    S.stats.forEach(s => { const v = Math.round(G.stats[s.id] || 0); const e = $('#sv-' + s.id); if (e) e.textContent = v; const me = $('#map-sv-' + s.id); if (me) me.textContent = v; const mb = $('#map-sb-' + s.id); if (mb) { mb.style.width = Math.max(0, Math.min(100, v)) + '%'; mb.style.background = G.faction.color; } });
     // rebuild bars
     $$('.meter').forEach((node, i) => { const mt = S.meters[i]; const bar = node.querySelector('.pbar'); if (bar) bar.outerHTML = pixelBar(G.meters[mt.id] || 0, mt.id === 'FREEDOM' ? '#f2b134' : '#4f83c2'); });
     $$('.stat').forEach((node, i) => { const s = S.stats[i]; const bar = node.querySelector('.pbar'); if (bar) bar.outerHTML = pixelBar(G.stats[s.id] || 0, G.faction.color); });
@@ -483,7 +488,7 @@
       <ol class="help-steps">
         <li><b>Pick a perspective.</b> You lead one faction through the road to civil war and Reconstruction, 1850 to 1877.</li>
         <li><b>Read the situation, make one call.</b> Choice <b>A</b> is what actually happened. <b>B</b> and <b>C</b> are roads not taken.</li>
-        <li><b>Watch the map.</b> States recolor by loyalty — <span style="color:${loyaltyColor(90)}">Union blue</span> to <span style="color:#8a8a8a">Confederate gray</span>. Gold marks emancipation. Dots are movements on the ground.</li>
+        <li><b>Watch the map.</b> States recolor by loyalty — <span style="color:${loyaltyColor(90)}">Union blue</span> through <span style="color:#bb9b54">contested gold</span> to <span style="color:#a75145">Confederate red</span>. Gold marks emancipation. Dots are movements on the ground.</li>
         <li><b>Mind your meters.</b> <b>Union</b> and <b>Freedom</b> decide your ending; Economy, Arms and Power shape what your choices can do.</li>
         <li><b>Eight decisions, then history judges.</b> One of twenty endings, with what really happened beside it.</li>
       </ol>
