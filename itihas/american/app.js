@@ -204,7 +204,7 @@
       t.classList.toggle('occ-usa', r.occupier === 'USA');
       t.classList.toggle('occ-csa', r.occupier === 'CSA');
       t.classList.toggle('nation', r.tier === 'nation');
-      const dark = r.loyalty < 45 && !ghost;
+      const dark = r.loyalty < 40 && !ghost;
       t.innerHTML = `<span class="tlabel" style="color:${dark ? '#eee' : '#1a1712'}">${id}</span>` +
         (r.pins.length ? `<span class="pins">${r.pins.map(p => `<span class="pin sz${p.size}" title="${PIN[p.group] ? PIN[p.group].name : p.group}">${PIN[p.group] ? PIN[p.group].e : '⚪'}</span>`).join('')}</span>` : '');
     }

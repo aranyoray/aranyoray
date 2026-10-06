@@ -51,21 +51,12 @@
     CUB: { name: 'Cuba', side: 'edge-bottom', tint: '#b87333' }
   };
 
-  // loyalty -> fill color (interpolated stops from the spec).
+  // loyalty -> fixed bloc fill: Confederate red, contested gold, Union blue.
+  // Keeping each bloc categorical makes the state map read like a political map.
   window.AH_loyaltyColor = function (v) {
-    const stops = [
-      [0, [151, 74, 66]], [19, [167, 81, 69]], [39, [190, 112, 78]],
-      [49, [202, 158, 88]], [64, [210, 185, 121]], [79, [108, 151, 190]], [100, [45, 96, 158]]
-    ];
     v = Math.max(0, Math.min(100, v));
-    for (let i = 1; i < stops.length; i++) {
-      if (v <= stops[i][0]) {
-        const [a, ca] = stops[i - 1], [b, cb] = stops[i];
-        const t = (v - a) / (b - a || 1);
-        const c = ca.map((x, k) => Math.round(x + (cb[k] - x) * t));
-        return `rgb(${c[0]},${c[1]},${c[2]})`;
-      }
-    }
-    return 'rgb(45,96,158)';
+    if (v < 40) return 'rgb(183, 99, 75)';
+    if (v < 65) return 'rgb(202, 158, 88)';
+    return 'rgb(75, 122, 173)';
   };
 })();
