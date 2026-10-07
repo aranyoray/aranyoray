@@ -12,7 +12,6 @@
     IMMIGRANT: { e: '🟢', name: 'Immigrant communities' }, BRITISH: { e: '🟥', name: 'British' },
     FRENCH: { e: '🟣', name: 'French' }, MEXICAN: { e: '🟩', name: 'Mexican republic' }
   };
-  const SLAVERY_STROKE = { FREE: 'none', SLAVE: '#111', SELF_EMANCIPATING: '#f2b134', ABOLISHED: '#f2b134' };
 
   const $ = (s, r) => (r || document).querySelector(s);
   const $$ = (s, r) => Array.from((r || document).querySelectorAll(s));
@@ -169,19 +168,24 @@
     return `<div class="credit">Conceptualized &amp; developed by <strong>Ethan Pianko</strong></div>`;
   }
 
-  /* ---------- board ---------- */
+  /* ---------- state-shape map ---------- */
   function boardHTML() {
-    let maxR = 0, maxC = 0;
-    for (const v of Object.values(G.regions)) { maxR = Math.max(maxR, v.row); maxC = Math.max(maxC, v.col); }
-    let tiles = '';
-    for (const [id, r] of Object.entries(G.regions)) {
-      tiles += `<div class="tile" data-region="${id}" style="grid-row:${r.row + 1};grid-column:${r.col + 1}"></div>`;
-    }
+    const states = (window.AH_STATE_SHAPES || []).map(state => `
+      <g class="state-group" data-region="${state.id}">
+        <path class="state-shape${G.regions[state.id] ? '' : ' unrepresented'}" data-region="${state.id}" d="${state.path}" aria-label="${state.name}"><title>${state.name}</title></path>
+        <text class="state-label" data-region="${state.id}" x="${state.x}" y="${state.y}">${state.id}</text>
+        <text class="state-pins" data-region="${state.id}" x="${state.x}" y="${state.y + 17}"></text>
+      </g>`).join('');
     const chips = Object.entries(G.foreign).map(([id, f]) =>
       `<div class="fchip ${f.side}" data-region="${id}" style="--tint:${f.tint}"><span>${f.name}</span></div>`).join('');
     const boardStats = S.stats.map(st => `<div class="map-stat"><div><span>${st.label}</span><b id="map-sv-${st.id}">${Math.round(G.stats[st.id] || 0)}</b></div><div class="map-stat-track"><i id="map-sb-${st.id}" style="width:${Math.max(0, Math.min(100, G.stats[st.id] || 0))}%;background:${G.faction.color}"></i></div></div>`).join('');
     return `<div class="board-wrap">
-      <div class="board-map-row"><div class="board" style="grid-template-rows:repeat(${maxR + 1},1fr);grid-template-columns:repeat(${maxC + 1},1fr)">${tiles}</div><aside class="map-health" aria-label="Faction map health">${boardStats}</aside></div>
+      <div class="board-map-row"><div class="state-map-wrap">
+        <svg class="state-map" viewBox="0 0 1120 570" role="img" aria-label="United States state map colored by Union, contested, and Confederate bloc">
+          <title>United States bloc map</title>${states}
+        </svg>
+        <div class="map-source">Present-day outlines from the <a href="https://www.census.gov/geographies/mapping-files/2025/geo/carto-boundary-file.html" target="_blank" rel="noreferrer">U.S. Census Bureau</a> · blocs shift as you play</div>
+      </div><aside class="map-health" aria-label="Faction map health">${boardStats}</aside></div>
       <div class="foreign-row">${chips}</div>
       <div class="headlines" id="headlines"></div>
     </div>`;
@@ -189,24 +193,27 @@
 
   function paintBoard() {
     for (const [id, r] of Object.entries(G.regions)) {
-      const t = $(`.tile[data-region="${id}"]`); if (!t) continue;
+      const shape = $(`.state-shape[data-region="${id}"]`);
+      const label = $(`.state-label[data-region="${id}"]`);
+      const pins = $(`.state-pins[data-region="${id}"]`);
+      if (!shape) continue;
       const ghost = r.tier === 'ghost';
-      t.style.background = ghost ? '#efeae0' : loyaltyColor(r.loyalty);
-      t.classList.toggle('bloc-union', !ghost && r.loyalty >= 65);
-      t.classList.toggle('bloc-contested', !ghost && r.loyalty >= 40 && r.loyalty < 65);
-      t.classList.toggle('bloc-confederate', !ghost && r.loyalty < 40);
-      t.classList.toggle('bloc-ghost', ghost);
-      t.style.opacity = ghost ? '0.4' : (r.tier === 'terr' ? '0.82' : '1');
-      t.style.setProperty('--stroke', SLAVERY_STROKE[r.slavery] || 'none');
-      t.classList.toggle('slave', r.slavery === 'SLAVE');
-      t.classList.toggle('emancip', r.slavery === 'SELF_EMANCIPATING');
-      t.classList.toggle('abolished', r.slavery === 'ABOLISHED');
-      t.classList.toggle('occ-usa', r.occupier === 'USA');
-      t.classList.toggle('occ-csa', r.occupier === 'CSA');
-      t.classList.toggle('nation', r.tier === 'nation');
-      const dark = r.loyalty < 40 && !ghost;
-      t.innerHTML = `<span class="tlabel" style="color:${dark ? '#eee' : '#1a1712'}">${id}</span>` +
-        (r.pins.length ? `<span class="pins">${r.pins.map(p => `<span class="pin sz${p.size}" title="${PIN[p.group] ? PIN[p.group].name : p.group}">${PIN[p.group] ? PIN[p.group].e : '⚪'}</span>`).join('')}</span>` : '');
+      const bloc = ghost ? 'not yet a state' : r.loyalty >= 65 ? 'Union' : r.loyalty >= 40 ? 'contested' : 'Confederate';
+      shape.style.fill = ghost ? '#d6d1c5' : loyaltyColor(r.loyalty);
+      shape.style.opacity = ghost ? '0.58' : (r.tier === 'terr' ? '0.88' : '1');
+      shape.setAttribute('aria-label', `${shape.querySelector('title')?.textContent || id}: ${bloc}`);
+      shape.classList.toggle('bloc-union', !ghost && r.loyalty >= 65);
+      shape.classList.toggle('bloc-contested', !ghost && r.loyalty >= 40 && r.loyalty < 65);
+      shape.classList.toggle('bloc-confederate', !ghost && r.loyalty < 40);
+      shape.classList.toggle('bloc-ghost', ghost);
+      shape.classList.toggle('slave', r.slavery === 'SLAVE');
+      shape.classList.toggle('emancip', r.slavery === 'SELF_EMANCIPATING');
+      shape.classList.toggle('abolished', r.slavery === 'ABOLISHED');
+      shape.classList.toggle('occ-usa', r.occupier === 'USA');
+      shape.classList.toggle('occ-csa', r.occupier === 'CSA');
+      shape.classList.toggle('nation', r.tier === 'nation');
+      if (label) label.style.fill = r.loyalty < 40 && !ghost ? '#fffdf7' : '#1a1712';
+      if (pins) pins.textContent = r.pins.map(pin => PIN[pin.group] ? PIN[pin.group].e : '').join(' ');
     }
     for (const [id, f] of Object.entries(G.foreign)) {
       const c = $(`.fchip[data-region="${id}"]`); if (!c) continue;
@@ -245,6 +252,7 @@
         <div class="lg"><span class="sw" style="background:${loyaltyColor(90)}"></span>Union</div>
         <div class="lg"><span class="sw" style="background:${loyaltyColor(50)}"></span>Contested</div>
         <div class="lg"><span class="sw" style="background:${loyaltyColor(8)}"></span>Confederate</div>
+        <div class="lg"><span class="sw" style="background:#cbc6b8"></span>Not in scenario</div>
         <div class="lg"><span class="sw gold"></span>Emancipation</div>
       </div>
     </aside>`;
@@ -304,8 +312,8 @@
     applyChoice(choice);
     // animate map
     paintBoard();
-    $$('.tile').forEach(t => { t.classList.remove('flash'); });
-    (choice.recolor || []).forEach(rc => { const t = $(`.tile[data-region="${rc.r}"]`) || $(`.fchip[data-region="${rc.r}"]`); if (t) { t.classList.add('flash'); } });
+    $$('.state-shape').forEach(t => { t.classList.remove('flash'); });
+    (choice.recolor || []).forEach(rc => { const t = $(`.state-shape[data-region="${rc.r}"]`) || $(`.fchip[data-region="${rc.r}"]`); if (t) { t.classList.add('flash'); } });
     refreshBars();
     bumpMeter('UNION'); bumpMeter('FREEDOM');
     if (G.meters.FREEDOM > before.FREEDOM) Snd.good(); else if (G.meters.UNION < before.UNION - 8) Snd.bad();
@@ -345,7 +353,7 @@
 
   function placeHeadline(e) {
     const board = $('#headlines');
-    const tile = $(`.tile[data-region="${e.region}"]`) || $(`.fchip[data-region="${e.region}"]`);
+    const tile = $(`.state-shape[data-region="${e.region}"]`) || $(`.fchip[data-region="${e.region}"]`);
     const wrap = $('.board-wrap');
     const h = el('div', 'headline');
     h.innerHTML = `<b>${e.place}</b>${e.text}`;
@@ -383,7 +391,7 @@
 
   function advance() {
     // clear headlines
-    $('#headlines').innerHTML = ''; $$('.tile.event-dot').forEach(t => t.classList.remove('event-dot'));
+    $('#headlines').innerHTML = ''; $$('.state-shape.event-dot').forEach(t => t.classList.remove('event-dot'));
     // hard stop
     if (G.meters.UNION <= 15) return endGame();
     const fp = flashAfter(G.turn);

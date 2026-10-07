@@ -1,5 +1,4 @@
-/* A House Divided — styles. Warm map/parchment base, faction-color accents,
-   pixel bars, tile grid that recolors, headlines pinned over the board. */
+/* A House Divided — parchment UI, historical state-shape map, faction colors. */
 :root{
   --bg:#eeeae1; --ink:#241f18; --muted:#7a7060; --line:rgba(40,31,24,.14);
   --card:#f7f3ea; --card2:#fffdf7; --gold:#e0a52b; --blue:#1f4e9a; --gray:#5e5e5e;
@@ -78,20 +77,22 @@ b,strong{font-weight:700}
 /* stage + board */
 .stage{padding:16px clamp(12px,2vw,22px) 24px;display:flex;flex-direction:column;gap:14px;min-width:0}
 .board-wrap{position:relative;background:linear-gradient(160deg,#f3eee3,#e9e2d3);border:1px solid var(--line);border-radius:14px;padding:14px;overflow:hidden}
-.board{display:grid;gap:4px;aspect-ratio:11/8;max-height:44vh;margin:0 auto;width:100%}
-.tile{position:relative;border-radius:4px;display:flex;align-items:flex-start;justify-content:flex-start;box-shadow:inset 0 0 0 1px rgba(255,255,255,.06);transition:background .8s ease,opacity .5s,box-shadow .3s;overflow:hidden}
-.tile .tlabel{font-family:var(--mono);font-size:8px;font-weight:500;padding:2px 3px;letter-spacing:.02em;opacity:.9}
-.tile.slave{box-shadow:inset 0 0 0 1.5px rgba(0,0,0,.55)}
-.tile.emancip{box-shadow:inset 0 0 0 2px var(--gold);animation:dash 1s linear infinite}
-.tile.abolished{box-shadow:inset 0 0 0 2px var(--gold)}
-@keyframes dash{to{box-shadow:inset 0 0 0 2px #f4c052}}
-.tile.occ-usa::after,.tile.occ-csa::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent 0 4px,rgba(31,78,154,.32) 4px 8px)}
-.tile.occ-csa::after{background:repeating-linear-gradient(45deg,transparent 0 4px,rgba(60,60,60,.4) 4px 8px)}
-.tile.nation{outline:1.5px dashed #b5563a;outline-offset:-3px}
-.tile.flash{animation:tileflash .9s ease}
-@keyframes tileflash{0%{box-shadow:0 0 0 3px var(--gold),inset 0 0 0 1px #fff}60%{box-shadow:0 0 22px 2px var(--gold)}100%{box-shadow:inset 0 0 0 1px rgba(255,255,255,.06)}}
-.tile.event-dot{outline:2px solid var(--gold);outline-offset:-1px;z-index:2}
-.tile .pins{position:absolute;bottom:1px;right:1px;display:flex;flex-wrap:wrap;justify-content:flex-end;gap:0;max-width:80%}
+.state-map-wrap{position:relative;flex:0 1 auto;width:min(100%,calc(48vh * 1.965));min-width:0}
+.state-map{display:block;width:100%;height:auto;max-height:50vh;overflow:visible}
+.state-shape{fill:#d6d1c5;stroke:#fffdf7;stroke-width:2.3;stroke-linejoin:round;fill-rule:evenodd;vector-effect:non-scaling-stroke;transition:fill .45s ease,opacity .35s ease,stroke .25s ease;cursor:default}
+.state-shape.unrepresented{fill:#cbc6b8;opacity:.75}.state-shape.slave{stroke:#77644f;stroke-width:1.35}
+.state-shape.emancip{stroke:var(--gold);stroke-width:3;stroke-dasharray:7 4;animation:state-dash .9s linear infinite}
+.state-shape.abolished{stroke:var(--gold);stroke-width:3}
+.state-shape.occ-usa{stroke:#1f4e9a;stroke-width:3;stroke-dasharray:3 2}
+.state-shape.occ-csa{stroke:#3c3c3c;stroke-width:3;stroke-dasharray:3 2}
+.state-shape.nation{stroke:#b5563a;stroke-width:2.5;stroke-dasharray:6 4}
+.state-shape.flash{animation:state-flash .9s ease}
+.state-shape.event-dot{filter:drop-shadow(0 0 5px var(--gold));stroke:var(--gold);stroke-width:3.5}
+@keyframes state-dash{to{stroke-dashoffset:11}}
+@keyframes state-flash{0%{filter:drop-shadow(0 0 6px var(--gold))}60%{filter:drop-shadow(0 0 16px var(--gold))}100%{filter:none}}
+.state-label{font-family:var(--mono);font-size:13px;font-weight:500;text-anchor:middle;dominant-baseline:middle;paint-order:stroke;stroke:#f3eee3;stroke-width:2.5;stroke-linejoin:round;pointer-events:none;user-select:none}
+.state-pins{font-size:15px;text-anchor:middle;pointer-events:none}
+.map-source{font:8px var(--mono);letter-spacing:.03em;color:var(--muted);text-align:center;margin-top:-1px}.map-source a{color:inherit;text-decoration:underline;text-underline-offset:2px}
 .pin{font-size:8px;line-height:1}.pin.sz2{font-size:10px}.pin.sz3{font-size:13px;animation:pinpop .5s ease}
 @keyframes pinpop{0%{transform:scale(0)}70%{transform:scale(1.4)}100%{transform:scale(1)}}
 .foreign-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;justify-content:center}
@@ -178,7 +179,6 @@ b,strong{font-weight:700}
   .sidebar{flex-direction:row;flex-wrap:wrap;border-right:none;border-bottom:1px solid var(--line);align-items:flex-start}
   .faction-badge{width:100%}.meters,.stats{flex:1;min-width:150px}
   .legend{width:100%;flex-direction:row;flex-wrap:wrap;gap:12px}
-  .board{max-height:38vh}
   .brand-mid{display:none}
 }
 @media (max-width:520px){
@@ -187,16 +187,12 @@ b,strong{font-weight:700}
   .hero-stats{gap:16px}
 }
 
-/* The full state grid and its live faction condition remain visible together. */
+/* State silhouettes keep geographic shape while loyalty maps into fixed bloc fills. */
 .board-map-row{display:flex;align-items:center;justify-content:center;gap:12px;min-width:0}
-.board{flex:0 1 auto;width:min(100%,calc(44vh * 1.375));max-height:none;min-width:0}
 .map-health{flex:0 0 118px;display:grid;gap:11px;padding:10px 9px;background:rgba(255,253,247,.8);border:1px solid var(--line);border-radius:9px}
 .map-stat>div:first-child{display:flex;align-items:center;justify-content:space-between;gap:4px;font-family:var(--mono);font-size:9px;color:var(--muted)}
 .map-stat b{font-size:11px;color:var(--ink)}
 .map-stat-track{height:5px;margin-top:4px;background:#dedbce;border-radius:5px;overflow:hidden}
 .map-stat-track i{display:block;height:100%;border-radius:5px;transition:width .35s ease}
-.tile.bloc-union{box-shadow:inset 0 0 0 1px rgba(255,255,255,.24)}
-.tile.bloc-contested{box-shadow:inset 0 0 0 1px rgba(92,71,36,.24)}
-.tile.bloc-confederate{box-shadow:inset 0 0 0 1px rgba(85,38,36,.3)}
-@media(max-width:820px){.board{width:min(100%,calc(38vh * 1.375))}}
-@media(max-width:560px){.board-map-row{flex-direction:column;gap:8px}.board{width:min(100%,calc(36vh * 1.375))}.map-health{width:100%;flex:0 0 auto;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;padding:7px}.map-stat>div:first-child{font-size:8px}}
+@media(max-width:820px){.state-map-wrap{width:min(100%,calc(42vh * 1.965))}.state-map{max-height:44vh}}
+@media(max-width:560px){.board-map-row{flex-direction:column;gap:8px}.state-map-wrap{width:min(100%,calc(40vh * 1.965))}.state-map{max-height:40vh}.map-health{width:100%;flex:0 0 auto;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;padding:7px}.map-stat>div:first-child{font-size:8px}}
