@@ -181,7 +181,7 @@
     const boardStats = S.stats.map(st => `<div class="map-stat"><div><span>${st.label}</span><b id="map-sv-${st.id}">${Math.round(G.stats[st.id] || 0)}</b></div><div class="map-stat-track"><i id="map-sb-${st.id}" style="width:${Math.max(0, Math.min(100, G.stats[st.id] || 0))}%;background:${G.faction.color}"></i></div></div>`).join('');
     return `<div class="board-wrap">
       <div class="board-map-row"><div class="state-map-wrap">
-        <svg class="state-map" viewBox="0 0 1120 570" role="img" aria-label="United States state map colored by Union, contested, and Confederate bloc">
+        <svg class="state-map" viewBox="270 10 835 540" role="img" aria-label="United States state map colored by Union, contested, and Confederate bloc">
           <title>United States bloc map</title>${states}
         </svg>
         <div class="map-source">Present-day outlines from the <a href="https://www.census.gov/geographies/mapping-files/2025/geo/carto-boundary-file.html" target="_blank" rel="noreferrer">U.S. Census Bureau</a> · blocs shift as you play</div>
