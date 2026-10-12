@@ -289,21 +289,44 @@
     const rail = $('#turn-rail'); if (rail) rail.innerHTML = `<span class="trail-label">TURN</span>${s}`;
   }
 
+  // check whether a choice is available given current stats and flags
+  function lockReason(c) {
+    const r = c.requires || {};
+    if (r.ECON != null && G.stats.ECON < r.ECON) return `Needs Economy ≥ ${r.ECON} (you have ${Math.round(G.stats.ECON)})`;
+    if (r.ARMS != null && G.stats.ARMS < r.ARMS) return `Needs Arms ≥ ${r.ARMS} (you have ${Math.round(G.stats.ARMS)})`;
+    if (r.POWER != null && G.stats.POWER < r.POWER) return `Needs Power ≥ ${r.POWER} (you have ${Math.round(G.stats.POWER)})`;
+    if (r.UNION != null && G.meters.UNION < r.UNION) return `Needs Union ≥ ${r.UNION}`;
+    if (r.FREEDOM != null && G.meters.FREEDOM < r.FREEDOM) return `Needs Freedom ≥ ${r.FREEDOM}`;
+    if (r.flags && !r.flags.every(f => G.flags.has(f))) return `Needs an earlier choice: ${r.flags.join(', ')}`;
+    if (r.notFlags && r.notFlags.some(f => G.flags.has(f))) return `Closed off by an earlier choice: ${r.notFlags.filter(f => G.flags.has(f)).join(', ')}`;
+    return null;
+  }
+
   function renderSituation() {
     G.phase = 'situation';
     const node = G.nodes[G.turn];
     const p = $('#panel');
+    const allChoices = [...node.choices, ...(node.lockedChoices || [])];
+    const emojiFor = (c) => c.historical ? '🏛️' : (c.id === 'B' ? '🔀' : c.id === 'C' ? '⚡' : c.emoji || '✦');
+    const tagFor = (c) => c.historical ? 'HISTORICAL' : (c.counterfactual || 'ROAD NOT TAKEN');
     p.innerHTML = `
       <div class="node-head"><span class="node-year">${node.year}</span><h2>${node.title}</h2></div>
       ${node.intro && G.turn === 0 ? `<p class="node-intro">${node.intro}</p>` : ''}
       <p class="node-sit">${node.situation}</p>
-      <div class="choices">${node.choices.map(c => `
-        <button class="choice" data-choice="${c.id}">
-          <span class="choice-k">${c.id}</span>
-          <span class="choice-b"><b>${c.label}</b><small>${c.summary}</small></span>
-        </button>`).join('')}</div>`;
+      <div class="choices">${allChoices.map(c => {
+        const lock = lockReason(c);
+        return `
+        <button class="choice${lock ? ' locked' : ''}" data-choice="${c.id}"${lock ? ' aria-disabled="true" title="' + lock.replace(/"/g, '&quot;') + '"' : ''}>
+          <span class="choice-k" aria-hidden="true">${lock ? '🔒' : emojiFor(c)}</span>
+          <span class="choice-b"><b>${c.label}</b><small>${c.summary}</small><em class="choice-tag">${tagFor(c)}</em>${lock ? '<em class="lock-reason">🔒 ' + lock + '</em>' : ''}</span>
+        </button>`;
+      }).join('')}</div>`;
     p.classList.remove('ripple'); p.classList.add('enter');
-    $$('.choice', p).forEach(b => b.addEventListener('click', () => { Snd.unlock(); onChoose(node.choices.find(c => c.id === b.dataset.choice)); }));
+    $$('.choice', p).forEach(b => b.addEventListener('click', () => {
+      if (b.classList.contains('locked')) return;
+      Snd.unlock();
+      onChoose(allChoices.find(c => c.id === b.dataset.choice));
+    }));
   }
 
   function onChoose(choice) {
@@ -324,7 +347,7 @@
 
   function showRipple(choice) {
     const p = $('#panel');
-    p.innerHTML = `<div class="ripple-head"><span class="chosen">You chose <b>${choice.label}</b></span></div>
+    p.innerHTML = `<div class="ripple-head"><span class="chosen">📜 You chose <b>${choice.label}</b></span></div>
       <div class="ripple-list" id="ripple-list"></div>
       <button class="next-btn" id="next-btn" disabled>Revealing consequences…</button>`;
     p.classList.remove('enter'); p.classList.add('ripple');
@@ -339,10 +362,24 @@
       }
       const e = effs[i];
       Snd.pop();
-      // ripple list row
+      // ripple list row — insight hidden behind a "Why did this happen?" toggle
       const row = el('div', 'ripple-row');
-      row.innerHTML = `<span class="rr-place">${e.place}</span><span class="rr-text">${e.text}</span><span class="rr-why">${e.insight}</span>`;
+      const insightId = `rr-why-${i}`;
+      row.innerHTML = `<span class="rr-place">${e.place}</span>` +
+        `<span class="rr-text">${e.text}</span>` +
+        (e.insight ? `<button type="button" class="rr-insight-toggle" aria-expanded="false" aria-controls="${insightId}">＋ Why did this happen?</button>` +
+                     `<div id="${insightId}" class="rr-why">${e.insight}</div>` : '');
       list.appendChild(row); requestAnimationFrame(() => row.classList.add('in'));
+      const toggle = row.querySelector('.rr-insight-toggle');
+      if (toggle) {
+        toggle.addEventListener('click', (ev) => {
+          ev.stopPropagation();
+          const why = row.querySelector('.rr-why');
+          const open = why.classList.toggle('open');
+          toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+          toggle.textContent = (open ? '−' : '＋') + ' Why did this happen?';
+        });
+      }
       // headline over the region
       placeHeadline(e);
       i++;
@@ -389,11 +426,27 @@
     return (S.flashpoints || []).find(f => f.after === G.nodes[turnIdx].turn && !f._done);
   }
 
+  // flags that logically end the scenario before the next war-centered turn
+  // (if you averted war in 1861, 1862's "Bloodiest Day" should never arrive)
+  const EARLY_END = {
+    4: ['PEACEFUL_SEPARATION', 'CRITTENDEN', 'COLD_PEACE', 'NEUTRAL_RECOGNITION'],
+    5: ['ARMISTICE_1862'],
+    6: ['ARMISTICE_1863'],
+    7: ['MCCLELLAN_1864']
+  };
+  function shouldEndNow() {
+    const nodeTurn = G.nodes[G.turn] && G.nodes[G.turn].turn;
+    const terminators = EARLY_END[nodeTurn] || [];
+    return terminators.some(f => G.flags.has(f));
+  }
+
   function advance() {
     // clear headlines
     $('#headlines').innerHTML = ''; $$('.state-shape.event-dot').forEach(t => t.classList.remove('event-dot'));
     // hard stop
     if (G.meters.UNION <= 15) return endGame();
+    // logical cohesion: if the player averted or ended the war, skip remaining war turns
+    if (shouldEndNow()) return endGame();
     const fp = flashAfter(G.turn);
     if (fp) { fp._done = true; return renderFlashpoint(fp); }
     G.turn++;
@@ -454,7 +507,7 @@
           <div>Matched history <b>${histPct}%</b></div>
         </div>
         <div class="end-reality"><span class="er-tag">History</span>${e.reality}</div>
-        <div class="end-discuss"><span class="er-tag">Discuss</span><ul>${e.discuss.map(d => `<li>${d}</li>`).join('')}</ul></div>
+        <div class="end-discuss"><span class="er-tag">FAQs</span><ul>${e.discuss.map(d => `<li>${d}</li>`).join('')}</ul></div>
         <div class="end-actions">
           <button class="cta" id="again">Play again</button>
           <button class="ghost-btn" id="switch-cw">Try the Cold War →</button>

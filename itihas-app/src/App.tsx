@@ -856,7 +856,7 @@ export default function App() {
                     .slice(0, 3)
                     .map(eventCard)}
                 </div>
-                <h3>Bring these questions to the table.</h3>
+                <h3>FAQs — bring these to the table.</h3>
                 {ending?.discuss.map((q, i) => (
                   <details
                     key={q}
@@ -870,7 +870,7 @@ export default function App() {
                     }}
                   >
                     <summary>
-                      <span>0{i + 1}</span> Discussion question
+                      <span>0{i + 1}</span> FAQ
                     </summary>
                     <p>{q}</p>
                     <label>
@@ -1082,25 +1082,6 @@ export default function App() {
                         quotation.
                       </p>
                     </div>
-                    <label className="prediction">
-                      Who do you think history listened to?
-                      <select
-                        value={s!.prediction || ""}
-                        onChange={(e) =>
-                          setSession({
-                            ...s!,
-                            prediction: e.target.value || null,
-                          })
-                        }
-                      >
-                        <option value="">Optional prediction</option>
-                        {node!.advisors.map((a) => (
-                          <option key={a.id} value={a.id}>
-                            {a.name}
-                          </option>
-                        ))}
-                      </select>
-                    </label>
                     {s!.options.council && (
                       <p className="council-note">
                         Assign one advisor to each student. Read the arguments

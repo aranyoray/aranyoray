@@ -78,6 +78,14 @@
                 { place: 'Charleston, SC', region: 'SC', text: 'Fire-eaters lose ground for a decade; Unionists hold the Deep South through 1856.', insight: 'The Slave Power’s best argument was Northern bad faith, and you took it away.', recolor: [rc('SC', { dl: 10 }), rc('MS', { dl: 10 })] },
                 { place: 'Pittsburgh, PA', region: 'PA', text: 'The Free Soil vote collapses to 5% in 1852; the anti-slavery coalition loses its independent voice for four years.', insight: 'Parties that enforce laws their members hate hollow out.' }
               ] }
+          ],
+          lockedChoices: [
+            { id: 'D', label: 'Buy out every slaveholder', summary: 'Federal purchase of all enslaved people at market value.', counterfactual: 'ECONOMIC MOONSHOT',
+              requires: { ECON: 80 }, meterDelta: { FREEDOM: 50, UNION: -5 },
+              effects: [{ place: 'Washington, DC', region: 'DC', text: 'Would have cost roughly $3 billion in 1850 dollars — more than three times the federal budget of the decade.', insight: 'Compensated emancipation needed a treasury the United States did not have in 1850.' }] },
+            { id: 'E', label: 'Nationalize the Army around a new slavery line', summary: 'Call federal troops to the Mason–Dixon border; dare the South to secede first.', counterfactual: 'MILITARY ULTIMATUM',
+              requires: { ARMS: 60, POWER: 55 }, meterDelta: { UNION: -20, FREEDOM: 4 },
+              effects: [{ place: 'Baltimore, MD', region: 'MD', text: 'Taylor died before he could send troops anywhere; Fillmore had neither the army nor the mandate.', insight: 'The Union of 1850 had 10,000 regulars; the Compromise bought time to build the one that fought in 1861.' }] }
           ] },
 
         { id: 'REP_T2', turn: 2, year: '1854–56', title: 'Bleeding Kansas',
@@ -160,6 +168,14 @@
                 { place: 'New Orleans, LA', region: 'LA', text: 'The Confederacy sets tolls on the Mississippi; Ohio valley farmers demand a war the president has refused.', insight: 'The Northwest’s economy ran through a river now in foreign hands.' },
                 { place: 'Fort Monroe, VA', region: 'VA', text: 'No Union lines, no contrabands, no self-emancipation. Slavery expands into the new Confederate West.', insight: 'The war was the thing that made emancipation possible.', roll: { flag: 'RICHMOND_1862', pct: 0 } }
               ] }
+          ],
+          lockedChoices: [
+            { id: 'D', label: 'Invade the Deep South in April 1861', summary: 'Full invasion the moment Sumter falls — no three-month call.', counterfactual: 'ALL-IN WAR',
+              requires: { ARMS: 55 }, meterDelta: { UNION: -5, FREEDOM: 6 },
+              effects: [{ place: 'Charleston, SC', region: 'SC', text: 'The regular army was 16,000 men and most of its officers resigned to join the Confederacy in April.', insight: 'The Union Army of 1865 took four years to build; it did not exist in April 1861.' }] },
+            { id: 'E', label: 'Impeach Buchanan’s legacy appointees', summary: 'Purge the War Department, Navy, Supreme Court; take the whole federal machine.', counterfactual: 'POLITICAL COUP',
+              requires: { POWER: 65 }, meterDelta: { UNION: 2, FREEDOM: 4 },
+              effects: [{ place: 'Washington, DC', region: 'DC', text: 'Lincoln had 39.8% of the vote and no congressional majority for radical action in his first weeks.', insight: 'Legitimacy was the one thing the new administration could not spend.' }] }
           ] },
 
         { id: 'REP_T5', turn: 5, year: '1862', title: 'The Bloodiest Day',
